@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Model
+class User extends  Authenticatable implements FilamentUser
 {
     use HasFactory;
 
@@ -67,5 +71,10 @@ class User extends Model
     public function konsistensiRasios(): HasMany
     {
         return $this->hasMany(KonsistensiRasio::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
     }
 }
