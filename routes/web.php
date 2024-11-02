@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlternatifController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -14,13 +15,15 @@ Route::get('/', function () {
     return view('pages.coming-soon');
 })->name('index');
 
+Route::get('/login', function () {
+    return view('pages.login');
+})->name('login');
+
 Route::get('/kriteria', function () {
     return view('pages.kriteria');
 })->name('kriteria');
 
-Route::get('/alternatif', function () {
-    return view('pages.alternatif');
-})->name('alternatif');
+Route::get('/alternatif', [AlternatifController::class, 'index'])->name('alternatif');
 
 Route::get('/perbandingan-kriteria', function () {
     return view('pages.perbandingan-kriteria');
