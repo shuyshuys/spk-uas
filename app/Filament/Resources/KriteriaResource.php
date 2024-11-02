@@ -35,12 +35,12 @@ class KriteriaResource extends Resource
                         'cost' => 'Cost',
                     ])
                     ->required(),
-                Forms\Components\Textarea::make('keterangan')
-                    ->required()
-                    ->columnSpanFull(),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required(),
+                Forms\Components\RichEditor::make('keterangan')
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -57,14 +57,6 @@ class KriteriaResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
