@@ -27,10 +27,10 @@ class MatriksKeputusanResource extends Resource
                     ->required()
                     ->numeric(),
                 Forms\Components\Select::make('alternatif_id')
-                    ->relationship('alternatif', 'id')
+                    ->relationship('alternatif', 'nama')
                     ->required(),
                 Forms\Components\Select::make('kriteria_id')
-                    ->relationship('kriteria', 'id')
+                    ->relationship('kriteria', 'jenis_kriteria')
                     ->required(),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
@@ -45,10 +45,10 @@ class MatriksKeputusanResource extends Resource
                 Tables\Columns\TextColumn::make('nilai')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('alternatif.id')
+                Tables\Columns\TextColumn::make('alternatif.nama')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('kriteria.id')
+                Tables\Columns\TextColumn::make('kriteria.jenis_kriteria')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
