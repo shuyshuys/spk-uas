@@ -17,8 +17,7 @@ class KonsistensiRasio extends Model
      */
     protected $fillable = [
         'rasio_konsistensi',
-        'kriteria1_id',
-        'kriteria2_id',
+        'kriteria_id',
     ];
 
     /**
@@ -29,17 +28,11 @@ class KonsistensiRasio extends Model
     protected $casts = [
         'id' => 'integer',
         'rasio_konsistensi' => 'float',
-        'kriteria1_id' => 'integer',
-        'kriteria2_id' => 'integer',
+        'kriteria_id' => 'integer',
     ];
 
-    public function kriteria1(): BelongsTo
+    public function kriteria(): BelongsTo
     {
-        return $this->belongsTo(Kriteria1::class);
-    }
-
-    public function kriteria2(): BelongsTo
-    {
-        return $this->belongsTo(Kriteria2::class);
+        return $this->belongsTo(Kriteria::class);
     }
 }

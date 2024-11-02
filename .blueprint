@@ -5,12 +5,12 @@ created:
     - database/factories/MatriksKeputusanFactory.php
     - database/factories/PerbandinganKriteriaFactory.php
     - database/factories/KonsistensiRasioFactory.php
-    - database/migrations/2024_11_02_124326_create_users_table.php
-    - database/migrations/2024_11_02_124327_create_kriterias_table.php
-    - database/migrations/2024_11_02_124328_create_alternatifs_table.php
-    - database/migrations/2024_11_02_124329_create_matriks_keputusans_table.php
-    - database/migrations/2024_11_02_124330_create_perbandingan_kriterias_table.php
-    - database/migrations/2024_11_02_124331_create_konsistensi_rasios_table.php
+    - database/migrations/2024_11_02_124835_create_users_table.php
+    - database/migrations/2024_11_02_124836_create_kriterias_table.php
+    - database/migrations/2024_11_02_124837_create_alternatifs_table.php
+    - database/migrations/2024_11_02_124838_create_matriks_keputusans_table.php
+    - database/migrations/2024_11_02_124839_create_perbandingan_kriterias_table.php
+    - database/migrations/2024_11_02_124840_create_konsistensi_rasios_table.php
     - app/Models/User.php
     - app/Models/Kriteria.php
     - app/Models/Alternatif.php
@@ -22,5 +22,5 @@ models:
     Kriteria: { id: id, nama: 'string:255', bobot: 'float:5,2', jenis_kriteria: 'enum:benefit,cost', keterangan: text, relationships: { belongsTo: User, hasMany: 'MatriksKeputusan,PerbandinganKriteria,KonsistensiRasio' } }
     Alternatif: { id: id, nama: 'string:255', keterangan: text, relationships: { belongsTo: User, hasMany: MatriksKeputusan } }
     MatriksKeputusan: { id: id, nilai: integer, relationships: { belongsTo: 'Alternatif,Kriteria,User' } }
-    PerbandinganKriteria: { id: id, nilai_perbandingan: float, relationships: { belongsTo: 'Kriteria,Kriteria' } }
-    KonsistensiRasio: { rasio_konsistensi: float, relationships: { belongsTo: 'kriteria1,kriteria2' } }
+    PerbandinganKriteria: { id: id, nilai_perbandingan: float, relationships: { belongsTo: 'kriteria1,kriteria2' } }
+    KonsistensiRasio: { rasio_konsistensi: float, relationships: { belongsTo: Kriteria } }

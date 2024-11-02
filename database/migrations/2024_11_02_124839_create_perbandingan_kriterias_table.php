@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('perbandingan_kriterias', function (Blueprint $table) {
             $table->id();
             $table->float('nilai_perbandingan');
-            $table->foreignId('kriteria_id');
+            $table->foreignId('kriteria1_id');
+            $table->foreignId('kriteria2_id');
             $table->timestamps();
         });
     }

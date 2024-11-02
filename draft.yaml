@@ -39,9 +39,9 @@ models:
     id: id
     nilai_perbandingan: float
     relationships:
-      belongsTo: Kriteria,Kriteria
+      belongsTo: kriteria1,kriteria2
 
   KonsistensiRasio:
     rasio_konsistensi: float
     relationships:
-      belongsTo: kriteria1,kriteria2
+      belongsTo: Kriteria

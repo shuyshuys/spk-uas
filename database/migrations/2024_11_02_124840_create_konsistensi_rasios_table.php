@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('konsistensi_rasios', function (Blueprint $table) {
             $table->id();
             $table->float('rasio_konsistensi');
-            $table->foreignId('kriteria1_id');
-            $table->foreignId('kriteria2_id');
+            $table->foreignId('kriteria_id');
             $table->timestamps();
         });
     }

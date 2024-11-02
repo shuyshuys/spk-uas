@@ -17,7 +17,8 @@ class PerbandinganKriteria extends Model
      */
     protected $fillable = [
         'nilai_perbandingan',
-        'kriteria_id',
+        'kriteria1_id',
+        'kriteria2_id',
     ];
 
     /**
@@ -28,16 +29,17 @@ class PerbandinganKriteria extends Model
     protected $casts = [
         'id' => 'integer',
         'nilai_perbandingan' => 'float',
-        'kriteria_id' => 'integer',
+        'kriteria1_id' => 'integer',
+        'kriteria2_id' => 'integer',
     ];
 
-    public function kriteria(): BelongsTo
+    public function kriteria1(): BelongsTo
     {
-        return $this->belongsTo(Kriteria::class);
+        return $this->belongsTo(Kriteria1::class);
     }
 
-    public function kriteria(): BelongsTo
+    public function kriteria2(): BelongsTo
     {
-        return $this->belongsTo(Kriteria::class);
+        return $this->belongsTo(Kriteria2::class);
     }
 }

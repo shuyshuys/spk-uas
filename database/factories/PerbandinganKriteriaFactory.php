@@ -4,7 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Kriteria;
+use App\Models\Kriteria1;
+use App\Models\Kriteria2;
 use App\Models\PerbandinganKriteria;
 
 class PerbandinganKriteriaFactory extends Factory
@@ -23,7 +24,8 @@ class PerbandinganKriteriaFactory extends Factory
     {
         return [
             'nilai_perbandingan' => $this->faker->randomFloat(0, 0, 9999999999.),
-            'kriteria_id' => Kriteria::factory(),
+            'kriteria1_id' => Kriteria1::factory(),
+            'kriteria2_id' => Kriteria2::factory(),
         ];
     }
 }
