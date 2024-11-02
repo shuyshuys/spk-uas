@@ -1,0 +1,26 @@
+created:
+    - database/factories/UserFactory.php
+    - database/factories/KriteriaFactory.php
+    - database/factories/AlternatifFactory.php
+    - database/factories/MatriksKeputusanFactory.php
+    - database/factories/PerbandinganKriteriaFactory.php
+    - database/factories/KonsistensiRasioFactory.php
+    - database/migrations/2024_11_02_100123_create_users_table.php
+    - database/migrations/2024_11_02_100124_create_kriterias_table.php
+    - database/migrations/2024_11_02_100125_create_alternatifs_table.php
+    - database/migrations/2024_11_02_100126_create_matriks_keputusans_table.php
+    - database/migrations/2024_11_02_100127_create_perbandingan_kriterias_table.php
+    - database/migrations/2024_11_02_100128_create_konsistensi_rasios_table.php
+    - app/Models/User.php
+    - app/Models/Kriteria.php
+    - app/Models/Alternatif.php
+    - app/Models/MatriksKeputusan.php
+    - app/Models/PerbandinganKriteria.php
+    - app/Models/KonsistensiRasio.php
+models:
+    User: { id: id, name: 'string:255', email: 'string:255', email_verified_at: timestamp, username: 'string:255', password: 'string:255', remember_token: 'string:100', role: 'enum:admin,user_input,viewer', created_at: timestamps, updated_at: timestamps, relationships: { hasMany: 'Kriteria,Alternatif,MatriksKeputusan,PerbandinganKriteria,KonsistensiRasio' } }
+    Kriteria: { id: id, nama: 'string:255', bobot: 'float:5,2', jenis_kriteria: 'enum:benefit,cost', keterangan: text, created_at: timestamps, updated_at: timestamps, relationships: { belongsTo: User, hasMany: 'MatriksKeputusan,PerbandinganKriteria,KonsistensiRasio' } }
+    Alternatif: { id: id, nama: 'string:255', keterangan: text, created_at: timestamps, updated_at: timestamps, relationships: { belongsTo: User, hasMany: MatriksKeputusan } }
+    MatriksKeputusan: { id: id, nilai: integer, created_at: timestamps, updated_at: timestamps, relationships: { belongsTo: 'Alternatif,Kriteria,User' } }
+    PerbandinganKriteria: { id: id, nilai_perbandingan: float, created_at: timestamps, updated_at: timestamps, relationships: { belongsTo: 'Kriteria,Kriteria' } }
+    KonsistensiRasio: { rasio_konsistensi: float, created_at: timestamps, updated_at: timestamps, relationships: { belongsTo: Kriteria } }
