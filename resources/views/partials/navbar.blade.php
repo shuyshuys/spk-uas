@@ -19,6 +19,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/dashboard') }}">Administrator</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                            href="{{ url('https://readersinsight.net/jiet/article/view/2490') }}">Refference</a>
+                    </li>
                 </ul>
             </div>
             {{-- <div class="iq-search-bar device-search">
