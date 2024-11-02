@@ -29,8 +29,6 @@ class Alternatif extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'created_at' => 'timestamp',
-        'updated_at' => 'timestamp',
         'user_id' => 'integer',
     ];
 

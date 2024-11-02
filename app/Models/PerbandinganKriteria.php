@@ -28,8 +28,6 @@ class PerbandinganKriteria extends Model
     protected $casts = [
         'id' => 'integer',
         'nilai_perbandingan' => 'float',
-        'created_at' => 'timestamp',
-        'updated_at' => 'timestamp',
         'kriteria_id' => 'integer',
     ];
 

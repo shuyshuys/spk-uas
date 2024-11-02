@@ -24,8 +24,6 @@ class AlternatifFactory extends Factory
         return [
             'nama' => $this->faker->regexify('[A-Za-z0-9]{255}'),
             'keterangan' => $this->faker->text(),
-            'created_at' => $this->faker->word(),
-            'updated_at' => $this->faker->word(),
             'user_id' => User::factory(),
         ];
     }

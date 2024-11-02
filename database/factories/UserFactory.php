@@ -28,8 +28,6 @@ class UserFactory extends Factory
             'password' => $this->faker->password(),
             'remember_token' => $this->faker->uuid(),
             'role' => $this->faker->randomElement(["admin","user_input","viewer"]),
-            'created_at' => $this->faker->word(),
-            'updated_at' => $this->faker->word(),
         ];
     }
 }

@@ -44,4 +44,4 @@ models:
   KonsistensiRasio:
     rasio_konsistensi: float
     relationships:
-      belongsTo: Kriteria
+      belongsTo: kriteria1,kriteria2

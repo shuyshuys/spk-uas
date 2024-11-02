@@ -29,8 +29,6 @@ class MatriksKeputusan extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'created_at' => 'timestamp',
-        'updated_at' => 'timestamp',
         'alternatif_id' => 'integer',
         'kriteria_id' => 'integer',
         'user_id' => 'integer',

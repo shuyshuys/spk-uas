@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kriterias', function (Blueprint $table) {
+        Schema::create('perbandingan_kriterias', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 255);
-            $table->float('bobot', 5, 2);
-            $table->enum('jenis_kriteria', ["benefit", "cost"]);
-            $table->text('keterangan');
-            $table->foreignId('user_id');
+            $table->float('nilai_perbandingan');
+            $table->foreignId('kriteria_id');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kriterias');
+        Schema::dropIfExists('perbandingan_kriterias');
     }
 };

@@ -25,8 +25,6 @@ class MatriksKeputusanFactory extends Factory
     {
         return [
             'nilai' => $this->faker->numberBetween(-10000, 10000),
-            'created_at' => $this->faker->word(),
-            'updated_at' => $this->faker->word(),
             'alternatif_id' => Alternatif::factory(),
             'kriteria_id' => Kriteria::factory(),
             'user_id' => User::factory(),

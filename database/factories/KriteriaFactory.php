@@ -26,8 +26,6 @@ class KriteriaFactory extends Factory
             'bobot' => $this->faker->randomFloat(2, 0, 999.99),
             'jenis_kriteria' => $this->faker->randomElement(["benefit","cost"]),
             'keterangan' => $this->faker->text(),
-            'created_at' => $this->faker->word(),
-            'updated_at' => $this->faker->word(),
             'user_id' => User::factory(),
         ];
     }

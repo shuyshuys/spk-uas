@@ -23,8 +23,6 @@ class PerbandinganKriteriaFactory extends Factory
     {
         return [
             'nilai_perbandingan' => $this->faker->randomFloat(0, 0, 9999999999.),
-            'created_at' => $this->faker->word(),
-            'updated_at' => $this->faker->word(),
             'kriteria_id' => Kriteria::factory(),
         ];
     }

@@ -5,7 +5,8 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\KonsistensiRasio;
-use App\Models\Kriteria;
+use App\Models\Kriteria1;
+use App\Models\Kriteria2;
 
 class KonsistensiRasioFactory extends Factory
 {
@@ -23,9 +24,8 @@ class KonsistensiRasioFactory extends Factory
     {
         return [
             'rasio_konsistensi' => $this->faker->randomFloat(0, 0, 9999999999.),
-            'created_at' => $this->faker->word(),
-            'updated_at' => $this->faker->word(),
-            'kriteria_id' => Kriteria::factory(),
+            'kriteria1_id' => Kriteria1::factory(),
+            'kriteria2_id' => Kriteria2::factory(),
         ];
     }
 }

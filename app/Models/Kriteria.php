@@ -32,8 +32,6 @@ class Kriteria extends Model
     protected $casts = [
         'id' => 'integer',
         'bobot' => 'float',
-        'created_at' => 'timestamp',
-        'updated_at' => 'timestamp',
         'user_id' => 'integer',
     ];
 
