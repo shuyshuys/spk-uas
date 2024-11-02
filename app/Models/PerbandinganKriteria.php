@@ -35,11 +35,11 @@ class PerbandinganKriteria extends Model
 
     public function kriteria1(): BelongsTo
     {
-        return $this->belongsTo(Kriteria1::class);
+        return $this->belongsTo(Kriteria::class);
     }
 
     public function kriteria2(): BelongsTo
     {
-        return $this->belongsTo(Kriteria2::class);
+        return $this->belongsTo(Kriteria::class);
     }
 }
