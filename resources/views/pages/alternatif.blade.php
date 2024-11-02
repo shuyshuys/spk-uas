@@ -24,6 +24,13 @@
                     </h3>
                     <div class="card-body">
                         <div class="table-responsive">
+                            <span class="table-add float-end mb-3 me-2">
+                                <a href="{{ url('/dashboard/alternatifs/create') }}" class="btn btn-sm btn-success"><i
+                                        class="ri-add-fill"><span class="ps-1">Add
+                                            New</span></i>
+                                </a>
+
+                            </span>
                             <table id="datatable" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -40,8 +47,10 @@
                                             <td>{{ $alternatif->keterangan }}</td>
                                             <td>{{ $alternatif->user->name }}</td>
                                             <td>
-                                                <span class="table-remove"><button type="button"
-                                                        class="btn btn-danger btn-rounded btn-sm my-0">Remove</button></span>
+                                                <a href="{{ url('/dashboard/alternatifs/' . $alternatif->id . '/edit') }}"
+                                                    class="btn btn-info btn-rounded btn-sm my-0">Edit</a>
+                                                <a href="{{ url('/dashboard/alternatifs/' . $alternatif->id . '/edit') }}"
+                                                    class="btn btn-info btn-rounded btn-sm my-0">Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach
