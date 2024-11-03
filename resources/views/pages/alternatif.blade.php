@@ -9,7 +9,7 @@
             <div class="col-sm-12">
                 <div class="card position-relative inner-page-bg bg-primary" style="height: 150px;">
                     <div class="inner-page-title">
-                        <h3 class="text-white">Alternatif Page</h3>
+                        <h3 class="text-white">Halaman Alternatif</h3>
                         <p class="text-white">Halaman ini menampilkan daftar alternatif yang akan dinilai berdasarkan
                             kriteria yang telah ditentukan. Alternatif adalah pilihan yang tersedia dalam proses pengambilan
                             keputusan.</p>
@@ -36,7 +36,7 @@
                                     <tr>
                                         <th>Nama</th>
                                         <th>Keterangan</th>
-                                        <th>User</th>
+                                        <th>Dibuat Oleh</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -49,8 +49,6 @@
                                             <td>
                                                 <a href="{{ url('/dashboard/alternatifs/' . $alternatif->id . '/edit') }}"
                                                     class="btn btn-info btn-rounded btn-sm my-0">Edit</a>
-                                                <a href="{{ url('/dashboard/alternatifs/' . $alternatif->id . '/edit') }}"
-                                                    class="btn btn-info btn-rounded btn-sm my-0">Edit</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -59,7 +57,7 @@
                                     <tr>
                                         <th>Name</th>
                                         <th>Keterangan</th>
-                                        <th>User</th>
+                                        <th>Dibuat Oleh</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </tfoot>
