@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AlternatifController;
+use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\MatriksKeputusanController;
+use App\Http\Controllers\PerbandinganKriteriaController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -15,23 +18,23 @@ Route::get('/', function () {
     return view('pages.coming-soon');
 })->name('index');
 
+Route::get('/home', function () {
+    return view('pages.home');
+})->name('home');
+
 Route::get('/login', function () {
     return view('pages.login');
 })->name('login');
 
-Route::get('/kriteria', function () {
-    return view('pages.kriteria');
-})->name('kriteria');
+Route::get('/kriteria', [KriteriaController::class, 'index'])->name('kriteria');
 
 Route::get('/alternatif', [AlternatifController::class, 'index'])->name('alternatif');
 
-Route::get('/perbandingan-kriteria', function () {
-    return view('pages.perbandingan-kriteria');
-})->name('perbandingan-kriteria');
+Route::get('/perbandingan-kriteria', [PerbandinganKriteriaController::class, 'index'])->name('perbandingan-kriteria');
 
-Route::get('/matriks-keputusan', function () {
-    return view('pages.matriks-keputusan');
-})->name('matriks-keputusan');
+Route::get('/matriks-keputusan', [MatriksKeputusanController::class, 'index'])->name('matriks-keputusan');
+
+Route::post('/matriks-keputusans/update', [MatriksKeputusanController::class, 'update'])->name('matriks-keputusans.update');
 
 Route::get('/normalisasi', function () {
     return view('pages.normalisasi');
