@@ -30,7 +30,7 @@ class MatriksKeputusanResource extends Resource
                     ->relationship('alternatif', 'nama')
                     ->required(),
                 Forms\Components\Select::make('kriteria_id')
-                    ->relationship('kriteria', 'jenis_kriteria')
+                    ->relationship('kriteria', 'nama')
                     ->required(),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
@@ -42,26 +42,18 @@ class MatriksKeputusanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nilai')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('alternatif.nama')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('kriteria.jenis_kriteria')
+                Tables\Columns\TextColumn::make('kriteria.nama')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('nilai')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('user.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
