@@ -41,4 +41,9 @@ class Alternatif extends Model
     {
         return $this->hasMany(MatriksKeputusan::class);
     }
+
+    public function alternatifKriteria(): HasMany
+    {
+        return $this->hasMany(AlternatifKriteria::class);
+    }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
-use App\Models\KonsistensiRasio;
+use App\Models\Hasil;
 use Illuminate\Http\Request;
 
 class AlternatifController extends Controller
@@ -11,8 +11,8 @@ class AlternatifController extends Controller
     public function index()
     {
         $alternatifs = Alternatif::all();
-        $konsistensis = KonsistensiRasio::all();
+        $hasils = Hasil::orderBy('id', 'desc')->limit(5)->get();
 
-        return view('pages.alternatif', compact('alternatifs', 'konsistensis'));
+        return view('pages.alternatif', compact('alternatifs', 'hasils'));
     }
 }
