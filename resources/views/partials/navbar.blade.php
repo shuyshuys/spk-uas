@@ -45,7 +45,7 @@
                                 class="img-fluid rounded-circle me-3" alt="user">
                             <div class="caption">
                                 <h6 class="mb-0 line-height">
-                                    {{ auth()->user()->username ?? '' }} - {{ auth()->user()->name ?? 'Anonymous' }}
+                                    {{ auth()->user()->username ?? '---' }} - {{ auth()->user()->name ?? 'Anonymous' }}
                                 </h6>
                                 <h6 class="float-left font-size-12">{{ auth()->user()->role ?? 'user_input' }}</h6>
                             </div>
