@@ -2,16 +2,6 @@
     <div id="sidebar-scrollbar">
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
-                <li class="mt-3">
-                    <label for="input-user">Web</label>
-                </li>
-                <li class="">
-                    <a href="/home" class=" ">
-                        <i class="ri-home-line"></i></i><span>Home</span>
-                    </a>
-                </li>
-                <hr>
-                {{-- text "Input User" --}}
                 <li class="">
                     <label for="input-user">Input User</label>
                 </li>
