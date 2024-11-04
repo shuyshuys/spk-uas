@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\EditProfile;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -12,6 +13,7 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\View\LegacyComponents\Widget;
 use App\Filament\Widgets;
+use Filament\Navigation\MenuItem;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -30,6 +32,9 @@ class DashboardPanelProvider extends PanelProvider
             ->path('dashboard')
             ->login()
             ->profile(isSimple: false)
+            ->userMenuItems([
+                'profile' => MenuItem::make()->url(fn(): string => EditProfile::getUrl())
+            ])
             ->colors([
                 'primary' => Color::Amber,
             ])
