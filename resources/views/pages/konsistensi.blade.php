@@ -32,16 +32,21 @@
                                 </a> --}}
 
                             </span>
-                            <button id="updateButton" class="btn btn-primary">Update</button>
                             <table id="datatable" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-
+                                        <th>N</th>
+                                        @foreach ($konsistensis as $konsistensi)
+                                            <td>{{ $konsistensi->n }}</td>
+                                        @endforeach
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-
+                                        <th>Rasio</th>
+                                        @foreach ($konsistensis as $konsistensi)
+                                            <td>{{ $konsistensi->rasio_konsistensi }}</td>
+                                        @endforeach
                                     </tr>
                                 </tbody>
                                 <tfoot>
