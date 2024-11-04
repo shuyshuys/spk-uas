@@ -1,8 +1,13 @@
 <?php
 
 use App\Http\Controllers\AlternatifController;
+use App\Http\Controllers\HasilController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KonsistensiController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\MatriksKeputusanController;
+use App\Http\Controllers\MatriksRataRataController;
+use App\Http\Controllers\NormalisasiController;
 use App\Http\Controllers\PerbandinganKriteriaController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +23,7 @@ Route::get('/', function () {
     return view('pages.coming-soon');
 })->name('index');
 
-Route::get('/home', function () {
-    return view('pages.home');
-})->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', function () {
     return view('pages.login');
@@ -36,21 +39,13 @@ Route::get('/matriks-keputusan', [MatriksKeputusanController::class, 'index'])->
 
 Route::post('/matriks-keputusans/update', [MatriksKeputusanController::class, 'update'])->name('matriks-keputusans.update');
 
-Route::get('/normalisasi', function () {
-    return view('pages.normalisasi');
-})->name('normalisasi');
+Route::get('/normalisasi', [NormalisasiController::class, 'index'])->name('normalisasi');
 
-Route::get('/matriks-rata-rata', function () {
-    return view('pages.matriks-rata-rata');
-})->name('matriks-rata-rata');
+Route::get('/matriks-rata-rata', [MatriksRataRataController::class, 'index'])->name('matriks-rata-rata');
 
-Route::get('/konsistensi', function () {
-    return view('pages.konsistensi');
-})->name('konsistensi');
+Route::get('/konsistensi', [KonsistensiController::class, 'index'])->name('konsistensi');
 
-Route::get('/hasil', function () {
-    return view('pages.hasil');
-})->name('hasil');
+Route::get('/hasil', [HasilController::class, 'index'])->name('hasil');
 
 Route::post('/perhitungan', function () {
     return view('pages.perhitungan');
