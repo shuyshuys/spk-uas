@@ -9,6 +9,7 @@ use App\Http\Controllers\MatriksKeputusanController;
 use App\Http\Controllers\MatriksRataRataController;
 use App\Http\Controllers\NormalisasiController;
 use App\Http\Controllers\PerbandinganKriteriaController;
+use App\Http\Controllers\SawController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -35,9 +36,11 @@ Route::get('/alternatif', [AlternatifController::class, 'index'])->name('alterna
 
 Route::get('/perbandingan-kriteria', [PerbandinganKriteriaController::class, 'index'])->name('perbandingan-kriteria');
 
-Route::get('/matriks-keputusan', [MatriksKeputusanController::class, 'index'])->name('matriks-keputusan');
+Route::post('/perbandingan-kriteria/update', [PerbandinganKriteriaController::class, 'update'])->name('perbandingan-kriteria.update');
 
-Route::post('/matriks-keputusans/update', [MatriksKeputusanController::class, 'update'])->name('matriks-keputusans.update');
+Route::get('/saw', [SawController::class, 'index'])->name('saw');
+
+Route::get('/matriks-keputusan', [MatriksKeputusanController::class, 'index'])->name('matriks-keputusan');
 
 Route::get('/normalisasi', [NormalisasiController::class, 'index'])->name('normalisasi');
 
