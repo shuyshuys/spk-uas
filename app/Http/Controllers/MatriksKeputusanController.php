@@ -12,7 +12,7 @@ class MatriksKeputusanController extends Controller
     public function index()
     {
         $matriks = MatriksKeputusan::with(['kriteria'])->get();
-        $hasils = Hasil::orderBy('id', 'desc')->limit(5)->get();
+        $hasils = Hasil::orderBy('id', 'desc')->limit(3)->get();
 
         // Group by kriteria_id
         $matriksGrouped = $matriks->groupBy('kriteria_id');

@@ -11,7 +11,7 @@ class PerbandinganKriteriaController extends Controller
     public function index()
     {
         $perbandingans = PerbandinganKriteria::all();
-        $hasils = Hasil::orderBy('id', 'desc')->limit(5)->get();
+        $hasils = Hasil::orderBy('id', 'desc')->limit(3)->get();
         $perbandingansGrouped = $perbandingans->groupBy('kriteria2_id');
 
         return view('pages.perbandingan-kriteria', compact('perbandingansGrouped', 'hasils'));

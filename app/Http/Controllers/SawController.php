@@ -10,7 +10,7 @@ class SawController extends Controller
 {
     public function index()
     {
-        $hasils = Hasil::orderBy('id', 'desc')->limit(5)->get();
+        $hasils = Hasil::orderBy('id', 'desc')->limit(3)->get();
         $saws = AlternatifKriteria::all();
 
         $sawsGrouped = $saws->groupBy('alternatif_id');

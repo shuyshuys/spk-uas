@@ -11,7 +11,7 @@ class AlternatifController extends Controller
     public function index()
     {
         $alternatifs = Alternatif::all();
-        $hasils = Hasil::orderBy('id', 'desc')->limit(5)->get();
+        $hasils = Hasil::orderBy('id', 'desc')->limit(3)->get();
 
         return view('pages.alternatif', compact('alternatifs', 'hasils'));
     }

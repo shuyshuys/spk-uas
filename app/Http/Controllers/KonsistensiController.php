@@ -10,7 +10,7 @@ class KonsistensiController extends Controller
 {
     public function index()
     {
-        $hasils = Hasil::orderBy('id', 'desc')->limit(5)->get();
+        $hasils = Hasil::orderBy('id', 'desc')->limit(3)->get();
         $konsistensis = KonsistensiRasio::all();
 
         return view('pages.konsistensi', compact('hasils', 'konsistensis'));
