@@ -20,7 +20,7 @@
                 <!-- Editable table -->
                 <div class="card">
                     <h3 class="card-header text-center font-weight-bold text-uppercase">
-                        Perbandingan Kriteria
+                        Matriks Perbandingan Kriteria
                     </h3>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -29,41 +29,46 @@
                                         class="ri-add-fill"><span class="ps-1">Add
                                             New</span></i>
                                 </a> --}}
-
                             </span>
+                            <button id="updateButton" class="btn btn-primary">Save</button>
                             <table id="datatable" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Kriteria 1</th>
-                                        <th>Kriteria 2</th>
-                                        <th>Nilai Perbandingan</th>
-                                        <th>Aksi</th>
+                                        <th>Matriks Perbandingan</th>
+                                        @foreach ($perbandingansGrouped->first() as $perbandingan)
+                                            <th>{{ $perbandingan->kriteria1->nama }}</th>
+                                        @endforeach
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($perbandingans as $perbandingan)
+                                    @foreach ($perbandingansGrouped as $kriteriaId => $perbandingans)
                                         <tr>
-                                            <td>{{ $loop->iteration }}.</td>
-                                            <td>{{ $perbandingan->kriteria1->nama }}</td>
-                                            <td>{{ $perbandingan->kriteria2->nama }}</td>
-                                            <td>{{ $perbandingan->nilai_perbandingan }}</td>
-                                            <td>
-                                                <a href="{{ url('/dashboard/perbandingan-kriterias/' . $perbandingan->id . '/edit') }}"
-                                                    class="btn btn-info btn-rounded btn-sm my-0">Edit</a>
-                                                <p>ubah agar tidak perlu login untuk mengisi</p>
-                                            </td>
+                                            <th>{{ $perbandingans->first()->kriteria2->nama }}</th>
+                                            @foreach ($perbandingans as $perbandingan)
+                                                <td contenteditable="true" data-id="{{ $perbandingan->id }}">
+                                                    {{ $perbandingan->nilai_perbandingan }}</td>
+                                            @endforeach
                                         </tr>
                                     @endforeach
                                 </tbody>
-                                <tfoot>
+                                <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Keterangan</th>
-                                        <th>Dibuat Oleh</th>
-                                        <th>Aksi</th>
+                                        <th>Kriteria/Alternatif</th>
+                                        @foreach ($perbandingansGrouped->first() as $perbandingan)
+                                            <th>{{ $perbandingan->kriteria1->nama }}</th>
+                                        @endforeach
                                     </tr>
-                                </tfoot>
+                                </thead>
+                                <tbody>
+                                    <tr id="sumRow">
+                                        <td>Jumlah</td>
+                                        <td id="sumB">0</td>
+                                        <td id="sumC">0</td>
+                                        <td id="sumD">0</td>
+                                        <td id="sumE">0</td>
+                                        <td id="sumF">0</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -71,4 +76,62 @@
             </div>
         </div>
     </div>
+    <script>
+        function calculateSums() {
+            let sums = [0, 0, 0, 0, 0];
+            document.querySelectorAll('#datatable tbody tr').forEach(function(row, rowIndex) {
+                row.querySelectorAll('td[contenteditable="true"]').forEach(function(cell, cellIndex) {
+                    sums[cellIndex] += parseFloat(cell.innerText) || 0;
+                });
+            });
+
+            document.getElementById('sumB').innerText = sums[0].toFixed(2);
+            document.getElementById('sumC').innerText = sums[1].toFixed(2);
+            document.getElementById('sumD').innerText = sums[2].toFixed(2);
+            document.getElementById('sumE').innerText = sums[3].toFixed(2);
+            document.getElementById('sumF').innerText = sums[4].toFixed(2);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateSums();
+
+            document.querySelectorAll('td[contenteditable="true"]').forEach(function(cell) {
+                cell.addEventListener('input', calculateSums);
+            });
+        });
+    </script>
+    <script>
+        document.getElementById('updateButton').addEventListener('click', function() {
+            let updates = [];
+            document.querySelectorAll('td[contenteditable="true"]').forEach(function(td) {
+                updates.push({
+                    id: td.getAttribute('data-id'),
+                    nilai_perbandingan: td.innerText
+                });
+            });
+
+            fetch('{{ route('perbandingan-kriteria.update') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        updates: updates
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Data updated successfully!');
+                    } else {
+                        alert('Failed to update data.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating data.');
+                });
+        });
+    </script>
 @endsection
