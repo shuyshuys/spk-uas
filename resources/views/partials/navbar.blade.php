@@ -41,43 +41,22 @@
                     <li class="nav-item dropdown">
                         <a href="#" class="   d-flex align-items-center dropdown-toggle" id="drop-down-arrow"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="../assets/images/user/1.jpg" class="img-fluid rounded-circle me-3" alt="user">
+                            <img src="{{ auth()->user()->profile_picture }}" class="img-fluid rounded-circle me-3"
+                                alt="user">
                             <div class="caption">
-                                <h6 class="mb-0 line-height">John Doe</h6>
-                                <h6 class="float-left font-size-12">User</h6>
+                                <h6 class="mb-0 line-height">{{ auth()->user()->name }}</h6>
+                                <h6 class="float-left font-size-12">{{ auth()->user()->role }}</h6>
                             </div>
                         </a>
                         <div class="sub-drop dropdown-menu caption-menu" aria-labelledby="drop-down-arrow">
                             <div class="card shadow-none m-0">
                                 <div class="card-header  bg-primary">
                                     <div class="header-title">
-                                        <h5 class="mb-0 text-white">Hello Jhon Doe</h5>
+                                        <h5 class="mb-0 text-white">Hello, {{ auth()->user()->name }}!</h5>
                                         <span class="text-white font-size-12">Available</span>
                                     </div>
                                 </div>
                                 <div class="card-body p-0 ">
-                                    {{-- <a href="{{ route('profile') }}" class="iq-sub-card iq-bg-primary-hover">
-                                        <div class="d-flex align-items-center">
-                                            <div class="rounded card-icon bg-soft-primary">
-                                                <i class="ri-file-user-line"></i>
-                                            </div>
-                                            <div class="ms-3">
-                                                <h6 class="mb-0 ">My Profile</h6>
-                                                <p class="mb-0 font-size-12">View personal profile details.</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <a href="{{ route('setting') }}" class="iq-sub-card iq-bg-info-hover">
-                                        <div class="d-flex align-items-center">
-                                            <div class="rounded card-icon bg-soft-info">
-                                                <i class="ri-account-box-line"></i>
-                                            </div>
-                                            <div class="ms-3">
-                                                <h6 class="mb-0 ">Account settings</h6>
-                                                <p class="mb-0 font-size-12">Manage your account parameters.</p>
-                                            </div>
-                                        </div>
-                                    </a> --}}
                                     <div class="d-inline-block w-100 text-center p-3">
                                         <a class="btn btn-primary iq-sign-btn" href="../dashboard/sign-in.html"
                                             role="button">
