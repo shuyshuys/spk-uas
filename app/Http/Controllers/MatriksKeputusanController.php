@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\KonsistensiRasio;
+use App\Models\Hasil;
 use App\Models\MatriksKeputusan;
+use App\Models\PerbandinganKriteria;
 use Illuminate\Http\Request;
 
 class MatriksKeputusanController extends Controller
 {
     public function index()
     {
-        $matriks = MatriksKeputusan::with(['kriteria', 'alternatif'])->get();
-        $konsistensis = KonsistensiRasio::all();
+        $matriks = MatriksKeputusan::with(['kriteria'])->get();
+        $hasils = Hasil::orderBy('id', 'desc')->limit(5)->get();
 
-        // Group by kriteria_id and then by alternatif_id
+        // Group by kriteria_id
         $matriksGrouped = $matriks->groupBy('kriteria_id');
 
-        return view('pages.matriks-keputusan', compact('matriksGrouped', 'konsistensis'));
+        $perbandingans = PerbandinganKriteria::all();
+        $perbandingansGrouped = $perbandingans->groupBy('kriteria2_id');
+
+        return view('pages.matriks-keputusan', compact('matriksGrouped', 'hasils', 'perbandingansGrouped'));
     }
 
     public function update(Request $request)

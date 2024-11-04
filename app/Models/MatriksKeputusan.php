@@ -17,7 +17,6 @@ class MatriksKeputusan extends Model
      */
     protected $fillable = [
         'nilai',
-        'alternatif_id',
         'kriteria_id',
         'user_id',
     ];
@@ -29,15 +28,9 @@ class MatriksKeputusan extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'alternatif_id' => 'integer',
         'kriteria_id' => 'integer',
         'user_id' => 'integer',
     ];
-
-    public function alternatif(): BelongsTo
-    {
-        return $this->belongsTo(Alternatif::class);
-    }
 
     public function kriteria(): BelongsTo
     {
