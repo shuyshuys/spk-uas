@@ -54,4 +54,9 @@ class Kriteria extends Model
     {
         return $this->hasMany(KonsistensiRasio::class);
     }
+
+    public function AlternatifKriteria(): HasMany
+    {
+        return $this->hasMany(AlternatifKriteria::class);
+    }
 }
