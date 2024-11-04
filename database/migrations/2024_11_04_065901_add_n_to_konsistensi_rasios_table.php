@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('konsistensi_rasios', function (Blueprint $table) {
-            $table->string('ci')->after('kriteria_id'); // Add CI column
-            $table->string('cr')->after('ci'); // Add CR column
-            $table->enum('hasil', ['Konsisten', 'Tidak Konsisten'])->after('cr'); // Add enum column
+            $table->integer('n')->after('id');
+            $table->dropColumn('kriteria_id');
         });
     }
 
@@ -24,9 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('konsistensi_rasios', function (Blueprint $table) {
-            $table->dropColumn('ci');
-            $table->dropColumn('cr');
-            $table->dropColumn('hasil');
+            $table->dropColumn('n');
+            $table->unsignedBigInteger('kriteria_id')->after('id');
         });
     }
 };
