@@ -18,6 +18,9 @@ class KonsistensiRasio extends Model
     protected $fillable = [
         'rasio_konsistensi',
         'kriteria_id',
+        'ci',
+        'cr',
+        'hasil',
     ];
 
     /**
@@ -29,6 +32,9 @@ class KonsistensiRasio extends Model
         'id' => 'integer',
         'rasio_konsistensi' => 'float',
         'kriteria_id' => 'integer',
+        'ci' => 'float',
+        'cr' => 'float',
+        'hasil' => 'string',
     ];
 
     public function kriteria(): BelongsTo

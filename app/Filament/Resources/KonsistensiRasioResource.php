@@ -23,11 +23,23 @@ class KonsistensiRasioResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('kriteria_id')
+                    ->relationship('kriteria', 'nama')
+                    ->required(),
                 Forms\Components\TextInput::make('rasio_konsistensi')
                     ->required()
                     ->numeric(),
-                Forms\Components\Select::make('kriteria_id')
-                    ->relationship('kriteria', 'jenis_kriteria')
+                Forms\Components\TextInput::make('ci')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('cr')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\Select::make('hasil')
+                    ->options([
+                        'Konsisten' => 'Konsisten',
+                        'Tidak Konsisten' => 'Tidak Konsisten',
+                    ])
                     ->required(),
             ]);
     }
@@ -36,10 +48,19 @@ class KonsistensiRasioResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('kriteria.nama')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('rasio_konsistensi')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('kriteria.jenis_kriteria')
+                Tables\Columns\TextColumn::make('ci')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('cr')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('hasil')
                     ->numeric()
                     ->sortable(),
             ])
