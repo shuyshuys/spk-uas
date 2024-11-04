@@ -59,14 +59,14 @@
                                         <span class="text-white font-size-12">Available</span>
                                     </div>
                                 </div>
-                                <div class="card-body p-0 ">
+                                {{-- <div class="card-body p-0 ">
                                     <div class="d-inline-block w-100 text-center p-3">
                                         <a class="btn btn-primary iq-sign-btn" href="../dashboard/sign-in.html"
                                             role="button">
                                             Sign out
                                             <i class="ri-login-box-line ms-2"></i></a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </li>
