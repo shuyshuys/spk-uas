@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KonsistensiRasio;
 use App\Models\MatriksKeputusan;
 use Illuminate\Http\Request;
 
@@ -10,11 +11,12 @@ class MatriksKeputusanController extends Controller
     public function index()
     {
         $matriks = MatriksKeputusan::with(['kriteria', 'alternatif'])->get();
+        $konsistensis = KonsistensiRasio::all();
 
         // Group by kriteria_id and then by alternatif_id
         $matriksGrouped = $matriks->groupBy('kriteria_id');
 
-        return view('pages.matriks-keputusan', compact('matriksGrouped'));
+        return view('pages.matriks-keputusan', compact('matriksGrouped', 'konsistensis'));
     }
 
     public function update(Request $request)
