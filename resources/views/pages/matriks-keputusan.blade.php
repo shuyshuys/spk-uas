@@ -78,13 +78,13 @@
                                 <tbody>
                                     @foreach ($perbandingansGrouped as $kriteriaId => $perbandingans)
                                         <tr>
-                                            <td>{{ $perbandingans->first()->kriteria2->nama }}</td>
+                                            <th>{{ $perbandingans->first()->kriteria2->nama }}</th>
                                             @foreach ($perbandingans as $perbandingan)
                                                 <td data-id="{{ $perbandingan->id }}">
                                                     <span class="normalisasi-value"></span>
                                                 </td>
                                             @endforeach
-                                            <td class="rata-rata">0</td>
+                                            <th class="rata-rata">0</th>
                                         </tr>
                                     @endforeach
                                 </tbody>
