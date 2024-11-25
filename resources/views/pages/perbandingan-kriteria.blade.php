@@ -30,7 +30,7 @@
                                             New</span></i>
                                 </a> --}}
                             </span>
-                            <button id="updateButton" class="btn btn-primary">Save</button>
+                            <button id="updateButton" class="btn btn-primary mb-1">Simpan</button>
                             <table id="datatable" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
