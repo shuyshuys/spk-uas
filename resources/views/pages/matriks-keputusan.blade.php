@@ -64,6 +64,7 @@
                         Matriks Normalisasi
                     </h3>
                     <div class="card-body">
+                        <button id="updateButton" class="btn btn-primary mb-1">Simpan Bobot</button>
                         <div class="">
                             <table id="datatable-normalisasi" class="table table-striped table-bordered">
                                 <thead>
