@@ -11,6 +11,11 @@
                     </a>
                 </li>
                 <li class="">
+                    <a href="/normalisasi" class=" ">
+                        <i class="ri-folder-chart-line"></i><span>Normalisasi</span>
+                    </a>
+                </li>
+                <li class="">
                     <a href="/saw" class=" ">
                         <i class="ri-scales-line"></i></i><span>Simple Additive Weighting</span>
                     </a>
@@ -36,23 +41,18 @@
                 </li>
                 <hr>
                 <li class="">
-                    <label for="input-user">Output</label>
+                    <label for="input-user">Hasil</label>
                 </li>
                 {{-- <li class="">
                     <a href="/Normalisasi" class=" ">
                         <i class="ri-layout-grid-line"></i><span>Normalisasi</span>
                     </a>
                 </li> --}}
-                <li class="">
-                    <a href="/normalisasi" class=" ">
-                        <i class="ri-folder-chart-line"></i><span>Normalisasi</span>
-                    </a>
-                </li>
-                <li class="">
+                <!-- <li class="">
                     <a href="/matriks-rata-rata" class=" ">
                         <i class="ri-calculator-line"></i><span>Matriks Rata Rata</span>
                     </a>
-                </li>
+                </li> -->
                 <li class="">
                     <a href="/hasil" class=" ">
                         <i class="ri-checkbox-line"></i></i><span>Hasil</span>
