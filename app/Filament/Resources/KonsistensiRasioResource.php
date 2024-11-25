@@ -17,6 +17,10 @@ class KonsistensiRasioResource extends Resource
 {
     protected static ?string $model = KonsistensiRasio::class;
 
+    protected static ?string $label = 'Konsistensi Rasio';
+    
+    protected static ?string $navigationLabel = 'Konsistensi Rasio';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

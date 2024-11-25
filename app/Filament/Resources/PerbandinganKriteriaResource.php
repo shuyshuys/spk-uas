@@ -17,6 +17,10 @@ class PerbandinganKriteriaResource extends Resource
 {
     protected static ?string $model = PerbandinganKriteria::class;
 
+    protected static ?string $label = 'Perbandingan Kriteria';
+    
+    protected static ?string $navigationLabel = 'Perbandingan Kriteria';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

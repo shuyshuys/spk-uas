@@ -17,6 +17,10 @@ class KriteriaResource extends Resource
 {
     protected static ?string $model = Kriteria::class;
 
+    protected static ?string $label = 'Kriteria';
+
+    protected static ?string $navigationLabel = 'Kriteria';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
