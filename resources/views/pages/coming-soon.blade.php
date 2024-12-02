@@ -37,7 +37,7 @@
                             <h2 class="mt-4 mb-1">Stay tunned, we're launching very soon</h2>
                             <p>We are working very hard to give you the best experience possible!</p>
                             {{-- <ul class="countdown row list-inline" data-date="Des 01 2024 00:00:00"> --}}
-                            <ul class="countdown row list-inline" data-date="Dec 1 2024 00:00:00">
+                            <ul class="countdown row list-inline" data-date="Dec 20 2024 00:00:00">
                                 <li class="col-md-6 col-xl-3">
                                     <div class="card">
                                         <div class="card-body">
