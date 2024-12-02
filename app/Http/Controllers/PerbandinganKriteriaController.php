@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hasil;
+use App\Models\Kriteria;
 use App\Models\PerbandinganKriteria;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,12 @@ class PerbandinganKriteriaController extends Controller
     {
         $perbandingans = PerbandinganKriteria::all();
         $hasils = Hasil::orderBy('id', 'desc')->limit(3)->get();
+        $kriteria = Kriteria::all();
         $perbandingansGrouped = $perbandingans->groupBy('kriteria2_id');
+        $perbandingans = PerbandinganKriteria::all()->groupBy('kriteria1_id');
 
-        return view('pages.perbandingan-kriteria', compact('perbandingansGrouped', 'hasils'));
+
+        return view('pages.perbandingan-kriteria', compact('perbandingansGrouped', 'perbandingans', 'kriteria', 'hasils'));
     }
 
     public function update(Request $request)
