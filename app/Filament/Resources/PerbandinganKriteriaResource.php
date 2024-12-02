@@ -21,6 +21,8 @@ class PerbandinganKriteriaResource extends Resource
     
     protected static ?string $navigationLabel = 'Perbandingan Kriteria';
 
+    protected static ?string $pluralLabel = 'Perbandingan Kriteria';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

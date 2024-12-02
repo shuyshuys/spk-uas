@@ -21,6 +21,8 @@ class KriteriaResource extends Resource
 
     protected static ?string $navigationLabel = 'Kriteria';
 
+    protected static ?string $pluralLabel = 'Kriteria';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

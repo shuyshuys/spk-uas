@@ -21,6 +21,8 @@ class KonsistensiRasioResource extends Resource
     
     protected static ?string $navigationLabel = 'Konsistensi Rasio';
 
+    protected static ?string $pluralLabel = 'Konsistensi Rasio';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -52,19 +54,10 @@ class KonsistensiRasioResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('kriteria.nama')
+                Tables\Columns\TextColumn::make('n')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('rasio_konsistensi')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('ci')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('cr')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('hasil')
                     ->numeric()
                     ->sortable(),
             ])

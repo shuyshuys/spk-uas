@@ -21,6 +21,8 @@ class MatriksKeputusanResource extends Resource
     
     protected static ?string $navigationLabel = 'Matriks Keputusan';
 
+    protected static ?string $pluralLabel = 'Matriks Keputusan';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

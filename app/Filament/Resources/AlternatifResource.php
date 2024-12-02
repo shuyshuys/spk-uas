@@ -21,6 +21,8 @@ class AlternatifResource extends Resource
     
     protected static ?string $navigationLabel = 'Alternatif';
 
+    protected static ?string $pluralLabel = 'Alternatif';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
