@@ -7,17 +7,17 @@
                 </li>
                 <li class="">
                     <a href="/perbandingan-kriteria" class=" ">
-                        <i class="ri-scales-line"></i></i><span>Perbandingan Kriteria</span>
+                        <i class="ri-scales-line"></i></i><span>AHP</span>
                     </a>
                 </li>
-                <li class="">
+                {{-- <li class="">
                     <a href="/normalisasi" class=" ">
                         <i class="ri-folder-chart-line"></i><span>Normalisasi</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="">
                     <a href="/saw" class=" ">
-                        <i class="ri-scales-line"></i></i><span>Simple Additive Weighting</span>
+                        <i class="ri-scales-line"></i></i><span>SAW</span>
                     </a>
                 </li>
                 <hr>
