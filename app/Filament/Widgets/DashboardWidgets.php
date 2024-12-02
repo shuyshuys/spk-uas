@@ -14,8 +14,8 @@ class DashboardWidget extends BaseWidget
     protected function getCards(): array
     {
         return [
-            Stat::make('Total Users', User::count()),
-            Stat::make('Users Registered Today', User::whereDate('created_at', today())->count()),
+            Stat::make('Total Pengguna', User::count()),
+            Stat::make('Total Pengisian Hari ini', User::whereDate('created_at', today())->count()),
             Stat::make('Total Konsisensi Rasio', KonsistensiRasio::count()),
         ];
     }
