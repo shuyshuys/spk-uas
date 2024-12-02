@@ -42,7 +42,7 @@ Route::get('/saw', [SawController::class, 'index'])->name('saw');
 
 Route::get('/matriks-keputusan', [MatriksKeputusanController::class, 'index'])->name('matriks-keputusan');
 
-Route::get('/normalisasi', [NormalisasiController::class, 'index'])->name('normalisasi');
+// Route::get('/normalisasi', [NormalisasiController::class, 'index'])->name('normalisasi');
 
 Route::get('/matriks-rata-rata', [MatriksRataRataController::class, 'index'])->name('matriks-rata-rata');
 
