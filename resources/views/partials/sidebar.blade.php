@@ -3,7 +3,7 @@
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
                 <li class="">
-                    <label for="input-user">Input User</label>
+                    <label for="input-user">Input</label>
                 </li>
                 <li class="">
                     <a href="/perbandingan-kriteria" class=" ">
