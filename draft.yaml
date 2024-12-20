@@ -8,11 +8,66 @@ models:
     password: string:255
     remember_token: string:100
     role: enum:admin,user_input,viewer
+    profile_picture: string:255
     relationships:
       hasMany: Kriteria,Alternatif,MatriksKeputusan,PerbandinganKriteria,KonsistensiRasio
   
+  PasswordResetToken:
+    email: string:255
+    token: string:255
+    created_at: timestamp
+
+  Session:
+    id: string:255
+    user_id: foreign:users.id
+    ip_address: string:45
+    user_agent: text
+    payload: longText
+    last_activity: integer
+
+  Cache:
+    key: string:255
+    value: mediumText
+    expiration: integer
+
+  CacheLock:
+    key: string:255
+    owner: string:255
+    expiration: integer
+
+  Job:
+    id: id
+    queue: string:255
+    payload: longText
+    attempts: unsignedTinyInteger
+    reserved_at: unsignedInteger
+    available_at: unsignedInteger
+    created_at: unsignedInteger
+
+  JobBatch:
+    id: string:255
+    name: string:255
+    total_jobs: integer
+    pending_jobs: integer
+    failed_jobs: integer
+    failed_job_ids: longText
+    options: mediumText
+    cancelled_at: integer
+    created_at: integer
+    finished_at: integer
+
+  FailedJob:
+    id: id
+    uuid: string:255
+    connection: text
+    queue: text
+    payload: longText
+    exception: longText
+    failed_at: timestamp
+  
   Kriteria:
     id: id
+    id_user: foreign:users.id
     nama: string:255
     bobot: float:5,2
     jenis_kriteria: enum:benefit,cost
@@ -23,25 +78,47 @@ models:
   
   Alternatif:
     id: id
+    id_user: foreign:users.id
     nama: string:255
     keterangan: text
     relationships:
       belongsTo: User
-      hasMany: MatriksKeputusan
+  
+  AlternatifKriteria:
+    id: id
+    id_alternatif: foreign:alternatifs.id
+    id_kriteria: foreign:kriterias.id
+    nilai: decimal:10,4
+    relationships:
+      belongsTo: Alternatif,Kriteria,User
 
   MatriksKeputusan:
     id: id
-    nilai: integer
+    # id_alternatif: foreign:alternatifs.id
+    id_kriteria: foreign:kriterias.id
+    nilai: decimal:10,4
     relationships:
       belongsTo: Alternatif,Kriteria,User
 
   PerbandinganKriteria:
     id: id
+    id_kriteria1: foreign:kriterias.id
+    id_kriteria2: foreign:kriterias.id
     nilai_perbandingan: float
     relationships:
       belongsTo: kriteria1,kriteria2
 
   KonsistensiRasio:
+    id: id
+    n: integer
     rasio_konsistensi: float
     relationships:
       belongsTo: Kriteria
+
+  Hasil:
+    id: id
+    id_user: foreign:users.id
+    t: nullable decimal:10,4
+    ci: nullable decimal:10,4
+    ri: nullable decimal:10,4
+    hasil: nullable enum:consistent,inconsistent

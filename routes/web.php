@@ -38,6 +38,8 @@ Route::get('/perbandingan-kriteria', [PerbandinganKriteriaController::class, 'in
 
 Route::post('/perbandingan-kriteria/update', [PerbandinganKriteriaController::class, 'update'])->name('perbandingan-kriteria.update');
 
+Route::post('/perbandingan-kriteria/save-bobot', [PerbandinganKriteriaController::class, 'update'])->name('perbandingan-kriteria.save-bobot');
+
 Route::get('/saw', [SawController::class, 'index'])->name('saw');
 
 Route::get('/matriks-keputusan', [MatriksKeputusanController::class, 'index'])->name('matriks-keputusan');

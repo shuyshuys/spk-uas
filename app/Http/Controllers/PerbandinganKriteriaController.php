@@ -35,4 +35,19 @@ class PerbandinganKriteriaController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function saveBobot(Request $request)
+    {
+        $bobot = $request->input('bobot');
+
+        foreach ($bobot as $key => $value) {
+            $perbandingan = PerbandinganKriteria::find($key);
+            if ($perbandingan) {
+                $perbandingan->bobot = $value;
+                $perbandingan->save();
+            }
+        }
+
+        return response()->json(['success' => true]);
+    }
 }

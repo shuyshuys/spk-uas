@@ -1,0 +1,47 @@
+models:
+  User:
+    id: id
+    name: string:255
+    email: string:255
+    email_verified_at: timestamp
+    username: string:255
+    password: string:255
+    remember_token: string:100
+    role: enum:admin,user_input,viewer
+    relationships:
+      hasMany: Kriteria,Alternatif,MatriksKeputusan,PerbandinganKriteria,KonsistensiRasio
+  
+  Kriteria:
+    id: id
+    nama: string:255
+    bobot: float:5,2
+    jenis_kriteria: enum:benefit,cost
+    keterangan: text
+    relationships:
+      belongsTo: User
+      hasMany: MatriksKeputusan,PerbandinganKriteria,KonsistensiRasio
+  
+  Alternatif:
+    id: id
+    nama: string:255
+    keterangan: text
+    relationships:
+      belongsTo: User
+      hasMany: MatriksKeputusan
+
+  MatriksKeputusan:
+    id: id
+    nilai: integer
+    relationships:
+      belongsTo: Alternatif,Kriteria,User
+
+  PerbandinganKriteria:
+    id: id
+    nilai_perbandingan: float
+    relationships:
+      belongsTo: kriteria1,kriteria2
+
+  KonsistensiRasio:
+    rasio_konsistensi: float
+    relationships:
+      belongsTo: Kriteria
