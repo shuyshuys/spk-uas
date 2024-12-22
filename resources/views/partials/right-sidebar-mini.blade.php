@@ -3,24 +3,28 @@
         <div class="card shadow-none">
             <div class="card-body p-0">
                 <div class="media-height p-3" data-scrollbar="init">
-                    <h4 class="pt-3">Hasil terbaru</h4>
+                    <h4 class="pt-3">Hasil AHP Terbaru</h4>
                     <hr style="border: 1px solid grey; margin: 6px 0;" class="mb-2">
-                    @foreach ($hasils as $konsistensi)
-                        <div class="d-flex align-items-start mb-4">
-                            <div class="iq-profile-avatar status-online">
-                                <img class="rounded-circle avatar-50" src="{{ $konsistensi->user->profile_picture }}"
-                                    alt="">
+                    @if ($hasils->count() > 0)
+                        @foreach ($hasils as $konsistensi)
+                            <div class="d-flex align-items-start mb-4">
+                                <div class="iq-profile-avatar status-online">
+                                    <img class="rounded-circle avatar-50"
+                                        src="{{ $konsistensi->user->profile_picture }}" alt="">
+                                </div>
+                                <div class="ms-3">
+                                    <h6>{{ $konsistensi->user->username ?? '' }} - {{ $konsistensi->user->name }}</h6>
+                                    <p class="mb-0">t = {{ $konsistensi->t }}</p>
+                                    <p class="mb-0">CI = {{ $konsistensi->ci }}</p>
+                                    <p class="mb-0">RI = {{ $konsistensi->ri }}</p>
+                                    <p class="mb-0">A = {{ $konsistensi->hasil }}</p>
+                                </div>
                             </div>
-                            <div class="ms-3">
-                                <h6>{{ $konsistensi->user->username ?? '' }} - {{ $konsistensi->user->name }}</h6>
-                                <p class="mb-0">t = {{ $konsistensi->t }}</p>
-                                <p class="mb-0">CI = {{ $konsistensi->ci }}</p>
-                                <p class="mb-0">RI = {{ $konsistensi->ri }}</p>
-                                <p class="mb-0">A = {{ $konsistensi->hasil }}</p>
-                            </div>
-                        </div>
-                        <hr style="border: 1px solid grey; margin: 6px 0;" class="mb-2">
-                    @endforeach
+                            <hr style="border: 1px solid grey; margin: 6px 0;" class="mb-2">
+                        @endforeach
+                    @else
+                        <h6>Tidak ada data</h6>
+                    @endif
                 </div>
                 <div class="right-sidebar-toggle bg-primary text-white mt-3">
                     <i class="ri-arrow-left-line side-left-icon"></i>
