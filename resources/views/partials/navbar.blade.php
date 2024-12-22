@@ -34,12 +34,12 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="https://clone-spk-ahp.yazid.consulting/"
-                                    target="_blank">Referensi
+                                    target="_blank">Referensi Github
                                     AHP</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="https://clone-spk-wp.yazid.consulting/"
-                                    target="_blank">Referensi WP</a>
+                                    target="_blank">Referensi Github WP</a>
                             </li>
                         </ul>
                     </li>
