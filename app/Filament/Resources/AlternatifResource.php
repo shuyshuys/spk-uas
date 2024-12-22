@@ -18,12 +18,14 @@ class AlternatifResource extends Resource
     protected static ?string $model = Alternatif::class;
 
     protected static ?string $label = 'Alternatif';
-    
-    protected static ?string $navigationLabel = 'Alternatif';
 
-    protected static ?string $pluralLabel = 'Alternatif';
+    protected static ?string $navigationLabel = 'Alternatif Project Manajement';
+
+    protected static ?string $pluralLabel = 'Alternatif Project Manajement';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Master';
 
     public static function form(Form $form): Form
     {

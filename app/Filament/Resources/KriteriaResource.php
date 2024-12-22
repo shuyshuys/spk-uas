@@ -25,6 +25,8 @@ class KriteriaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Master';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -40,6 +42,7 @@ class KriteriaResource extends Resource
                         'benefit' => 'Benefit',
                         'cost' => 'Cost',
                     ])
+                    ->label('Kategori')
                     ->required(),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
@@ -54,15 +57,22 @@ class KriteriaResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('row_number')
+                    ->label('Kode')
+                    ->getStateUsing(function ($rowLoop) {
+                        return 'C' . ($rowLoop->index + 1);
+                    })
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('jenis_kriteria')
+                    ->label('Kategori'),
                 Tables\Columns\TextColumn::make('bobot')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('jenis_kriteria'),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('user.name')
+                //     ->numeric()
+                //     ->sortable(),
             ])
             ->filters([
                 //
