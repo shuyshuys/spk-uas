@@ -13,7 +13,9 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\View\LegacyComponents\Widget;
 use App\Filament\Widgets;
+use Filament\Facades\Filament;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\UserMenuItem;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -62,5 +64,19 @@ class DashboardPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+    }
+
+    public function boot(): void
+    {
+        //
+        Filament::serving(function (): void {
+            Filament::registerUserMenuItems([
+                // 'profile' => MenuItem::make()->url(fn(): string => EditProfile::getUrl())
+                UserMenuItem::make()
+                    ->label('Home')
+                    ->url(fn(): string => route('home'))
+                    ->icon('heroicon-o-home'),
+            ]);
+        });
     }
 }
