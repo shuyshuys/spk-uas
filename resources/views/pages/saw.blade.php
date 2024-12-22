@@ -25,6 +25,15 @@
                     </h3>
                     <div class="card-body">
                         <div class="table-editable">
+                            <div class="d-flex justify-content-between mb-1">
+                                <div>
+                                    <button id="clearButton" class="btn btn-primary">Bersihkan</button>
+                                    <button id="updateButton" class="btn btn-primary">Simpan</button>
+                                </div>
+                                <div>
+                                    <a href="/dashboard/alternatifs" class="btn btn-info">Ubah Alternatif</a>
+                                </div>
+                            </div>
                             <table id="datatable" class="table table-striped table-bordered text-center">
                                 <thead>
                                     <tr>
@@ -40,21 +49,30 @@
                                 <tbody>
                                     @foreach ($sawsGrouped as $alternatif_id => $saws)
                                         @if ($saws->first() && $saws->first()->alternatif)
-                                            <tr>
+                                            <tr data-alternatif-id="{{ $alternatif_id }}">
                                                 <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
                                                 @foreach ($saws as $saw)
-                                                    <td>{{ $saw->nilai }}</td>
+                                                    <td contenteditable="true" data-kriteria-id="{{ $saw->kriteria_id }}">
+                                                        {{ $saw->nilai }}</td>
                                                 @endforeach
                                             </tr>
                                         @endif
                                     @endforeach
                                 </tbody>
-                                <tfoot>
+                                <thead>
                                     <tr>
-
+                                        <th>Alternatif/<br>
+                                            &nbsp;/<br>
+                                            /Kriteria
+                                        </th>
+                                        @foreach ($sawsGrouped->first() as $saw)
+                                            <th class="align-middle">C{{ $loop->iteration }} {{ $saw->kriteria->nama }}</th>
+                                        @endforeach
                                     </tr>
-                                </tfoot>
+                                </thead>
                             </table>
+                            <p>*Bagian tabel ini bisa di edit secara langsung</p>
+                            <p>*Jika alternatif belum muncul semua, bisa di refresh lagi untuk memunculkan data awal</p>
                         </div>
                     </div>
                 </div>
@@ -72,7 +90,8 @@
                                             Alternatif\
                                         </th>
                                         @foreach ($sawsGrouped->first() as $saw)
-                                            <th class="align-middle">C{{ $loop->iteration }} {{ $saw->kriteria->nama }}</th>
+                                            <th class="align-middle">C{{ $loop->iteration }} {{ $saw->kriteria->nama }}
+                                            </th>
                                         @endforeach
                                     </tr>
                                 </thead>
@@ -155,14 +174,13 @@
                         Hasil dan Kesimpulan
                     </h3>
                     <div id="result-explanation" class="card-body">
-                        <p class="mt-3"><strong>Kesimpulan:</strong> Nilai terbesar ada pada
+                        <h4 class="mt-3"><strong>Kesimpulan</strong><br> Nilai terbesar ada pada
                             <strong id="best-alternative"></strong>
                             sehingga alternatif <strong id="best-alternative"></strong> adalah alternatif yang terpilih
                             sebagai alternatif
                             terbaik.<br>Dengan kata lain, <strong id="best-alternative"></strong> akan terpilih sebagai
-                            Project Management
-                            terbaik sesuai kebutuhanmu.
-                        </p>
+                            Project Management sesuai kebutuhanmu.
+                        </h4>
                     </div>
                 </div>
             </div>
@@ -213,12 +231,12 @@
                     let weightedValue = normalizedValue * weights[cellIndex];
                     document.querySelector(
                         `#saw-scores-datatable tbody tr:nth-child(${rowIndex + 1}) td:nth-child(${cellIndex + 2})`
-                    ).innerText = weightedValue.toFixed(4);
+                    ).innerText = weightedValue.toFixed(9);
                     sawScore += weightedValue;
                 });
                 document.querySelector(
                     `#saw-scores-datatable tbody tr:nth-child(${rowIndex + 1}) td.saw-total`
-                ).innerText = sawScore.toFixed(4);
+                ).innerText = sawScore.toFixed(9);
 
                 if (sawScore > maxScore) {
                     maxScore = sawScore;
@@ -229,6 +247,61 @@
             });
 
             document.getElementById('best-alternative').innerText = bestAlternative;
+
+            // Save updated data to the database
+            document.getElementById('updateButton').addEventListener('click', function() {
+                let updatedData = [];
+                document.querySelectorAll('#datatable tbody tr').forEach(row => {
+                    let alternatifId = row.getAttribute('data-alternatif-id');
+                    row.querySelectorAll('td').forEach(cell => {
+                        let kriteriaId = cell.getAttribute('data-kriteria-id');
+                        let nilai = parseFloat(cell.innerText) || 0;
+                        updatedData.push({
+                            alternatif_id: alternatifId,
+                            kriteria_id: kriteriaId,
+                            nilai: nilai
+                        });
+                    });
+                });
+
+                fetch('{{ route('alternatifkriteria.update') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            data: updatedData
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Data berhasil disimpan!');
+                            window.location.reload();
+                        } else {
+                            alert('Gagal menyimpan data.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Terjadi kesalahan saat menyimpan data.');
+                    });
+            });
+
+            // Clear all data in the table
+            document.getElementById('clearButton').addEventListener('click', function() {
+                document.querySelectorAll('#datatable tbody tr td').forEach(cell => {
+                    cell.innerText = '';
+                });
+                document.querySelectorAll('#normalized-datatable tbody tr td').forEach(cell => {
+                    cell.innerText = '';
+                });
+                document.querySelectorAll('#saw-scores-datatable tbody tr td').forEach(cell => {
+                    cell.innerText = '';
+                });
+                document.getElementById('best-alternative').innerText = '';
+            });
         });
     </script>
 @endsection
