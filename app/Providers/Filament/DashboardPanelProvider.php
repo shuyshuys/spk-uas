@@ -15,6 +15,8 @@ use Filament\View\LegacyComponents\Widget;
 use App\Filament\Widgets;
 use Filament\Facades\Filament;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
 use Filament\Navigation\UserMenuItem;
 use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -63,6 +65,29 @@ class DashboardPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Kembali ke AHP')
+                    ->url('/ahp', shouldOpenInNewTab: false)
+                    ->icon('heroicon-o-home')
+                    ->sort(10)
+                    ->group('Keluar'),
+                NavigationItem::make('Kembali ke SAW')
+                    ->url('/saw', shouldOpenInNewTab: false)
+                    ->icon('heroicon-o-home')
+                    ->sort(10)
+                    ->group('Keluar'),
+            ])
+            ->navigationGroups([
+                NavigationGroup::make()
+                    ->label('Master')
+                    ->collapsed(false),
+                NavigationGroup::make()
+                    ->label('Input')
+                    ->collapsed(true),
+                NavigationGroup::make()
+                    ->label('Keluar')
+                    ->collapsed(false),
             ]);
     }
 
