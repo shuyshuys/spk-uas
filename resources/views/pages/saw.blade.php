@@ -32,7 +32,6 @@
                                             &nbsp;\<br>
                                             Alternatif\
                                         </th>
-                                        {{-- @dd($sawsGrouped) --}}
                                         @foreach ($sawsGrouped->first() as $saw)
                                             <th class="align-middle">C{{ $loop->iteration }} {{ $saw->kriteria->nama }}</th>
                                         @endforeach
@@ -78,31 +77,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($sawsGrouped as $alternatif_id => $saws)
-                                        @if ($saws->first() && $saws->first()->alternatif)
-                                            <tr>
-                                                <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
-                                                @foreach ($saws as $saw)
-                                                    <td class="normalized-value"></td>
-                                                @endforeach
-                                            </tr>
-                                        @endif
-                                    @endforeach --}}
-                                    @php
-                                        $maxValues = [];
-                                        foreach ($sawsGrouped->first() as $index => $saw) {
-                                            $maxValues[$index] = $sawsGrouped->pluck('nilai')->flatten()->max();
-                                        }
-                                    @endphp
                                     @foreach ($sawsGrouped as $alternatif_id => $saws)
                                         <tr>
                                             <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
                                             @foreach ($saws as $index => $saw)
-                                                @php
-                                                    $maxValue = $maxValues[$index] ?? 1; // Default to 1 if max value is zero or not set
-                                                    $normalizedValue = $maxValue != 0 ? $saw->nilai / $maxValue : 0;
-                                                @endphp
-                                                <td>{{ number_format($normalizedValue, 4) }}</td>
+                                                <td class="normalized-value"></td>
                                             @endforeach
                                         </tr>
                                     @endforeach
@@ -131,7 +110,7 @@
                                     <tr>
                                         <td class="align-middle">Bobot</td>
                                         @foreach ($bobots as $bobot)
-                                            <td>{{ number_format($bobot->nilai, 5) }}</td>
+                                            <td class="bobot-value">{{ number_format($bobot->nilai, 5) }}</td>
                                         @endforeach
                                     </tr>
                                 </tbody>
@@ -148,44 +127,22 @@
                             <table id="saw-scores-datatable" class="table table-striped table-bordered text-center">
                                 <thead>
                                     <tr>
-                                        <th></th>
-                                        <th>SAW Score (blm cek bener ga)</th>
+                                        <th>Alternatif</th>
+                                        @foreach ($sawsGrouped->first() as $saw)
+                                            <th class="align-middle">C{{ $loop->iteration }} {{ $saw->kriteria->nama }}
+                                            </th>
+                                        @endforeach
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($sawsGrouped as $alternatif_id => $saws)
-                                        @if ($saws->first() && $saws->first()->alternatif)
-                                            <tr>
-                                                <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
-                                                <td class="saw-score"></td>
-                                            </tr>
-                                        @endif
-                                    @endforeach --}}
-                                    @php
-                                        $sawScores = [];
-                                        $maxScore = 0;
-                                        $bestAlternative = '';
-                                    @endphp
                                     @foreach ($sawsGrouped as $alternatif_id => $saws)
-                                        @php
-                                            $sawScore = 0;
-                                            foreach ($saws as $index => $saw) {
-                                                $maxValue = $maxValues[$index] ?? 1; // Default to 1 if max value is zero or not set
-                                                $normalizedValue = $maxValue != 0 ? $saw->nilai / $maxValue : 0;
-                                                $sawScore += $normalizedValue * $bobots[$index]->nilai;
-                                            }
-                                            if ($sawScore > $maxScore) {
-                                                $maxScore = $sawScore;
-                                                $bestAlternative = $saws->first()->alternatif->nama;
-                                            }
-                                            $sawScores[] = [
-                                                'name' => $saws->first()->alternatif->nama,
-                                                'score' => $sawScore,
-                                            ];
-                                        @endphp
                                         <tr>
                                             <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
-                                            <td>{{ number_format($sawScore, 4) }}</td>
+                                            @foreach ($saws as $index => $saw)
+                                                <td class="saw-value"></td>
+                                            @endforeach
+                                            <td class="saw-total"></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -198,15 +155,11 @@
                         Hasil dan Kesimpulan
                     </h3>
                     <div id="result-explanation" class="card-body">
-                        @foreach ($sawScores as $score)
-                            <p class="mb-1"><strong>{{ $score['name'] }}:</strong>
-                                {{ number_format($score['score'], 4) }}</p>
-                        @endforeach
                         <p class="mt-3"><strong>Kesimpulan:</strong> Nilai terbesar ada pada
-                            <strong>{{ $bestAlternative }}</strong>
-                            sehingga alternatif <strong>{{ $bestAlternative }}</strong> adalah alternatif yang terpilih
+                            <strong id="best-alternative"></strong>
+                            sehingga alternatif <strong id="best-alternative"></strong> adalah alternatif yang terpilih
                             sebagai alternatif
-                            terbaik.<br>Dengan kata lain, <strong>{{ $bestAlternative }}</strong> akan terpilih sebagai
+                            terbaik.<br>Dengan kata lain, <strong id="best-alternative"></strong> akan terpilih sebagai
                             Project Management
                             terbaik sesuai kebutuhanmu.
                         </p>
@@ -215,6 +168,7 @@
             </div>
         </div>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Calculate the maximum values for each column
@@ -246,20 +200,35 @@
 
             // Calculate SAW scores and update the SAW scores table
             let weights = [];
-            document.querySelectorAll('#weight-datatable tbody tr td').forEach((td, index) => {
+            document.querySelectorAll('#weight-datatable .bobot-value').forEach(td => {
                 weights.push(parseFloat(td.innerText) || 0);
             });
 
+            let maxScore = 0;
+            let bestAlternative = '';
             document.querySelectorAll('#normalized-datatable tbody tr').forEach((row, rowIndex) => {
                 let sawScore = 0;
                 row.querySelectorAll('td').forEach((cell, cellIndex) => {
                     let normalizedValue = parseFloat(cell.innerText) || 0;
-                    sawScore += normalizedValue * weights[cellIndex];
+                    let weightedValue = normalizedValue * weights[cellIndex];
+                    document.querySelector(
+                        `#saw-scores-datatable tbody tr:nth-child(${rowIndex + 1}) td:nth-child(${cellIndex + 2})`
+                    ).innerText = weightedValue.toFixed(4);
+                    sawScore += weightedValue;
                 });
                 document.querySelector(
-                    `#saw-scores-datatable tbody tr:nth-child(${rowIndex + 1}) td.saw-score`
+                    `#saw-scores-datatable tbody tr:nth-child(${rowIndex + 1}) td.saw-total`
                 ).innerText = sawScore.toFixed(4);
+
+                if (sawScore > maxScore) {
+                    maxScore = sawScore;
+                    bestAlternative = document.querySelector(
+                        `#saw-scores-datatable tbody tr:nth-child(${rowIndex + 1}) th`
+                    ).innerText;
+                }
             });
+
+            document.getElementById('best-alternative').innerText = bestAlternative;
         });
     </script>
 @endsection
