@@ -80,6 +80,7 @@
                                 </tbody>
                             </table>
                             <p>*Bagian tabel ini bisa di edit secara langsung</p>
+                            <p>*Jika jumlah tidak sesuai, bersihkan kemudian isi ulang data</p>
                         </div>
                     </div>
                 </div>
@@ -134,6 +135,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <p>*Harap isi Matriks Perbandingan Kriteria dahulu</p>
                         </div>
                     </div>
                 </div>
