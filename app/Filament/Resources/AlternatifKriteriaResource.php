@@ -18,7 +18,17 @@ class AlternatifKriteriaResource extends Resource
 {
     protected static ?string $model = AlternatifKriteria::class;
 
+    protected static ?string $label = 'SAW';
+
+    protected static ?string $navigationLabel = 'Manual SAW';
+
+    protected static ?string $pluralLabel = 'SAW';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Input';
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

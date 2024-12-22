@@ -18,37 +18,41 @@ class KonsistensiRasioResource extends Resource
     protected static ?string $model = KonsistensiRasio::class;
 
     protected static ?string $label = 'Konsistensi Rasio';
-    
+
     protected static ?string $navigationLabel = 'Konsistensi Rasio';
 
     protected static ?string $pluralLabel = 'Konsistensi Rasio';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('kriteria_id')
-                    ->relationship('kriteria', 'nama')
-                    ->required(),
-                Forms\Components\TextInput::make('rasio_konsistensi')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('ci')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('cr')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\Select::make('hasil')
-                    ->options([
-                        'Konsisten' => 'Konsisten',
-                        'Tidak Konsisten' => 'Tidak Konsisten',
-                    ])
-                    ->required(),
-            ]);
-    }
+    protected static ?string $navigationGroup = 'Master';
+
+    protected static ?int $navigationSort = 4;
+
+    // public static function form(Form $form): Form
+    // {
+    //     return $form
+    //         ->schema([
+    //             Forms\Components\Select::make('kriteria_id')
+    //                 ->relationship('kriteria', 'nama')
+    //                 ->required(),
+    //             Forms\Components\TextInput::make('rasio_konsistensi')
+    //                 ->required()
+    //                 ->numeric(),
+    //             Forms\Components\TextInput::make('ci')
+    //                 ->required()
+    //                 ->numeric(),
+    //             Forms\Components\TextInput::make('cr')
+    //                 ->required()
+    //                 ->numeric(),
+    //             Forms\Components\Select::make('hasil')
+    //                 ->options([
+    //                     'Konsisten' => 'Konsisten',
+    //                     'Tidak Konsisten' => 'Tidak Konsisten',
+    //                 ])
+    //                 ->required(),
+    //         ]);
+    // }
 
     public static function table(Table $table): Table
     {
@@ -65,12 +69,12 @@ class KonsistensiRasioResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
@@ -85,8 +89,13 @@ class KonsistensiRasioResource extends Resource
     {
         return [
             'index' => Pages\ListKonsistensiRasios::route('/'),
-            'create' => Pages\CreateKonsistensiRasio::route('/create'),
-            'edit' => Pages\EditKonsistensiRasio::route('/{record}/edit'),
+            // 'create' => Pages\CreateKonsistensiRasio::route('/create'),
+            // 'edit' => Pages\EditKonsistensiRasio::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
     }
 }

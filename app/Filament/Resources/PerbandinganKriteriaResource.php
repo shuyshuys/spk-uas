@@ -17,13 +17,17 @@ class PerbandinganKriteriaResource extends Resource
 {
     protected static ?string $model = PerbandinganKriteria::class;
 
-    protected static ?string $label = 'Perbandingan Kriteria';
-    
-    protected static ?string $navigationLabel = 'Perbandingan Kriteria';
+    protected static ?string $label = 'AHP';
 
-    protected static ?string $pluralLabel = 'Perbandingan Kriteria';
+    protected static ?string $navigationLabel = 'Manual AHP';
+
+    protected static ?string $pluralLabel = 'SAW';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationGroup = 'Input';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {

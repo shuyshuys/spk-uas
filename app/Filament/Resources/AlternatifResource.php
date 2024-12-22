@@ -19,13 +19,15 @@ class AlternatifResource extends Resource
 
     protected static ?string $label = 'Alternatif';
 
-    protected static ?string $navigationLabel = 'Alternatif Project Manajement';
+    protected static ?string $navigationLabel = 'Alternatif';
 
     protected static ?string $pluralLabel = 'Alternatif Project Manajement';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Master';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
