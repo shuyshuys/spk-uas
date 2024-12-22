@@ -9,7 +9,7 @@
             <div class="col-sm-12">
                 <div class="card position-relative inner-page-bg bg-primary mb-3" style="height: 150px;">
                     <div class="inner-page-title">
-                        <h3 class="text-white">Simple Additive Weighting</h3>
+                        <h3 class="text-white">SAW (Simple Additive Weighting)</h3>
                         <p class="text-white"> Metode Simple Additive Weighting (SAW) Sering juga dikenal istilah metode
                             penjumlahan terbobot. Konsep dasar metode SAW adalah mencari penjumlahan terbobot dari rating
                             kinerja pada setiap alternatif pada semua atribut (Fishburn, 1067)(MacCrommon, 1968).
@@ -32,6 +32,7 @@
                                             &nbsp;\<br>
                                             Alternatif\
                                         </th>
+                                        {{-- @dd($sawsGrouped) --}}
                                         @foreach ($sawsGrouped->first() as $saw)
                                             <th class="align-middle">C{{ $loop->iteration }} {{ $saw->kriteria->nama }}</th>
                                         @endforeach
@@ -39,12 +40,14 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($sawsGrouped as $alternatif_id => $saws)
-                                        <tr>
-                                            <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
-                                            @foreach ($saws as $saw)
-                                                <td>{{ $saw->nilai }}</td>
-                                            @endforeach
-                                        </tr>
+                                        @if ($saws->first() && $saws->first()->alternatif)
+                                            <tr>
+                                                <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
+                                                @foreach ($saws as $saw)
+                                                    <td>{{ $saw->nilai }}</td>
+                                                @endforeach
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                                 <tfoot>
@@ -75,11 +78,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{-- @foreach ($sawsGrouped as $alternatif_id => $saws)
+                                        @if ($saws->first() && $saws->first()->alternatif)
+                                            <tr>
+                                                <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
+                                                @foreach ($saws as $saw)
+                                                    <td class="normalized-value"></td>
+                                                @endforeach
+                                            </tr>
+                                        @endif
+                                    @endforeach --}}
+                                    @php
+                                        $maxValues = [];
+                                        foreach ($sawsGrouped->first() as $index => $saw) {
+                                            $maxValues[$index] = $sawsGrouped->pluck('nilai')->flatten()->max();
+                                        }
+                                    @endphp
                                     @foreach ($sawsGrouped as $alternatif_id => $saws)
                                         <tr>
                                             <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
-                                            @foreach ($saws as $saw)
-                                                <td class="normalized-value"></td>
+                                            @foreach ($saws as $index => $saw)
+                                                @php
+                                                    $maxValue = $maxValues[$index] ?? 1; // Default to 1 if max value is zero or not set
+                                                    $normalizedValue = $maxValue != 0 ? $saw->nilai / $maxValue : 0;
+                                                @endphp
+                                                <td>{{ number_format($normalizedValue, 4) }}</td>
                                             @endforeach
                                         </tr>
                                     @endforeach
@@ -108,7 +131,7 @@
                                     <tr>
                                         <td class="align-middle">Bobot</td>
                                         @foreach ($bobots as $bobot)
-                                            <td>{{ $bobot->nilai }}</td>
+                                            <td>{{ number_format($bobot->nilai, 5) }}</td>
                                         @endforeach
                                     </tr>
                                 </tbody>
@@ -130,10 +153,39 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {{-- @foreach ($sawsGrouped as $alternatif_id => $saws)
+                                        @if ($saws->first() && $saws->first()->alternatif)
+                                            <tr>
+                                                <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
+                                                <td class="saw-score"></td>
+                                            </tr>
+                                        @endif
+                                    @endforeach --}}
+                                    @php
+                                        $sawScores = [];
+                                        $maxScore = 0;
+                                        $bestAlternative = '';
+                                    @endphp
                                     @foreach ($sawsGrouped as $alternatif_id => $saws)
+                                        @php
+                                            $sawScore = 0;
+                                            foreach ($saws as $index => $saw) {
+                                                $maxValue = $maxValues[$index] ?? 1; // Default to 1 if max value is zero or not set
+                                                $normalizedValue = $maxValue != 0 ? $saw->nilai / $maxValue : 0;
+                                                $sawScore += $normalizedValue * $bobots[$index]->nilai;
+                                            }
+                                            if ($sawScore > $maxScore) {
+                                                $maxScore = $sawScore;
+                                                $bestAlternative = $saws->first()->alternatif->nama;
+                                            }
+                                            $sawScores[] = [
+                                                'name' => $saws->first()->alternatif->nama,
+                                                'score' => $sawScore,
+                                            ];
+                                        @endphp
                                         <tr>
                                             <th>A{{ $loop->iteration }} {{ $saws->first()->alternatif->nama }}</th>
-                                            <td class="saw-score"></td>
+                                            <td>{{ number_format($sawScore, 4) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -145,15 +197,19 @@
                     <h3 class="card-header text-center font-weight-bold text-uppercase">
                         Hasil dan Kesimpulan
                     </h3>
-                    <div class="mt-3">
-                        {{-- @foreach ($sawHasils as sawHasil)
-                            <h4>{{ $sawHasil->user->nama }}</h4>
-                            <p>{{ $sawHasil->nama }}</p>
-                            <p>{{ $sawHasil->hasil }}</p>
-                            <p>{{ $sawHasil->kesimpulan }}</p> --}}
-                        {{-- Nilai terbesar ada pada AAA sehingga alternatif AAA adalah alternatif yang terpilih sebagai alternatif terbaik.  --}}
-                        {{-- Dengan kata lain, NAMA akan terpilih sebagai XXX.  --}}
-                        {{-- @endforeach --}}
+                    <div id="result-explanation" class="card-body">
+                        @foreach ($sawScores as $score)
+                            <p class="mb-1"><strong>{{ $score['name'] }}:</strong>
+                                {{ number_format($score['score'], 4) }}</p>
+                        @endforeach
+                        <p class="mt-3"><strong>Kesimpulan:</strong> Nilai terbesar ada pada
+                            <strong>{{ $bestAlternative }}</strong>
+                            sehingga alternatif <strong>{{ $bestAlternative }}</strong> adalah alternatif yang terpilih
+                            sebagai alternatif
+                            terbaik.<br>Dengan kata lain, <strong>{{ $bestAlternative }}</strong> akan terpilih sebagai
+                            Project Management
+                            terbaik sesuai kebutuhanmu.
+                        </p>
                     </div>
                 </div>
             </div>

@@ -8,10 +8,10 @@
             <div class="col-sm-12">
                 <div class="card position-relative inner-page-bg bg-primary" style="height: 150px;">
                     <div class="inner-page-title">
-                        <h3 class="text-white">Halaman Perbandingan Kriteria</h3>
-                        <p class="text-white"> Halaman ini memungkinkan pengguna untuk melakukan perbandingan berpasangan
-                            antar kriteria. Halaman ini khusus untuk metode AHP, yang memerlukan penentuan bobot kriteria
-                            melalui perbandingan berpasangan.</p>
+                        <h3 class="text-white">AHP (Analytic Hierarchy Process)</h3>
+                        <p class="text-white"> Halaman AHP adalah sebuah metode pengambilan keputusan multikriteria yang
+                            terstruktur. Metode ini membantu kita untuk membuat keputusan yang lebih baik, terutama ketika
+                            kita dihadapkan pada banyak alternatif dan kriteria yang harus dipertimbangkan.</p>
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     </h3>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <button id="newDataButton" class="btn btn-primary mb-1">Baru</button>
+                            <button id="newDataButton" class="btn btn-primary mb-1">Hapus</button>
                             <button id="updateButton" class="btn btn-primary mb-1">Simpan</button>
                             <table id="datatable" class="table table-striped table-bordered">
                                 <thead>
@@ -34,6 +34,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $savedData = [];
+                                    @endphp
                                     @foreach ($kriteria as $k1)
                                         <tr>
                                             <th>{{ $k1->nama }}</th>
@@ -42,13 +45,11 @@
                                                     $perbandingan =
                                                         $perbandingans[$k1->id]->firstWhere('kriteria2_id', $k2->id) ??
                                                         null;
+                                                    $savedData[$k1->id][$k2->id] = $perbandingan;
                                                 @endphp
                                                 <td contenteditable="true" data-id="{{ $perbandingan->id ?? '' }}">
                                                     {{ $perbandingan->nilai_perbandingan ?? '' }}
                                                 </td>
-                                                {{-- <td contenteditable="true" data-id="{{ $perbandingan->id ?? '' }}" data-user-id="{{ auth()->user()->id }}" data-user-form-number="">
-                                                    {{ $perbandingan->nilai_perbandingan ?? '' }}
-                                                </td> --}}
                                             @endforeach
                                         </tr>
                                     @endforeach
@@ -72,47 +73,252 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card">
-                        <h3 class="card-header text-center font-weight-bold text-uppercase">
-                            Matriks Normalisasi
-                        </h3>
-                        <div class="card-body">
-                            <button id="updateButton" class="btn btn-primary mb-1">Simpan Bobot</button>
-                            <div class="">
-                                <table id="datatable-normalisasi" class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Matriks Normalisasi</th>
-                                            @foreach ($perbandingansGrouped->first() as $perbandingan)
-                                                <th>{{ $perbandingan->kriteria1->nama }}</th>
-                                            @endforeach
-                                            <th>Rata-rata</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($perbandingansGrouped as $kriteriaId => $perbandingans)
-                                            <tr>
-                                                <th>{{ $perbandingans->first()->kriteria2->nama }}</th>
-                                                @foreach ($perbandingans as $perbandingan)
-                                                    <td data-id="{{ $perbandingan->id }}">
-                                                        <span class="normalisasi-value"></span>
-                                                    </td>
-                                                @endforeach
-                                                <th class="rata-rata">0</th>
-                                            </tr>
+                </div>
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase">
+                        Matriks Normalisasi
+                    </h3>
+                    <div class="card-body">
+                        <button id="simpanBobot" class="btn btn-primary mb-1">Simpan Bobot</button>
+                        <div class="">
+                            <table id="datatable-normalisasi" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Matriks Normalisasi</th>
+                                        @foreach ($perbandingansGrouped->first() as $perbandingan)
+                                            <th>{{ $perbandingan->kriteria1->nama }}</th>
                                         @endforeach
-                                    </tbody>
-                                    <tfoot>
+                                        <th>Rata-rata</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($perbandingansGrouped as $kriteriaId => $perbandingans)
                                         <tr>
-                                            <th>Matriks Normalisasi</th>
-                                            @foreach ($perbandingansGrouped->first() as $perbandingan)
-                                                <th>{{ $perbandingan->kriteria1->nama }}</th>
+                                            <th>{{ $perbandingans->first()->kriteria2->nama }}</th>
+                                            @foreach ($perbandingans as $perbandingan)
+                                                <td data-id="{{ $perbandingan->id }}">
+                                                    <span class="normalisasi-value"></span>
+                                                </td>
                                             @endforeach
-                                            <th>Rata-rata</th>
+                                            <th class="rata-rata">0</th>
                                         </tr>
-                                    </tfoot>
-                                </table>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Matriks Normalisasi</th>
+                                        @foreach ($perbandingansGrouped->first() as $perbandingan)
+                                            <th>{{ $perbandingan->kriteria1->nama }}</th>
+                                        @endforeach
+                                        <th>Rata-rata</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="card">
+                            <h3 class="card-header text-center font-weight-bold text-uppercase">
+                                Matriks Perkalian
+                            </h3>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="datatable" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Perkalian</th>
+                                                @foreach ($kriteria as $k)
+                                                    <th>{{ $k->nama }}</th>
+                                                @endforeach
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($kriteria as $k1)
+                                                <tr>
+                                                    <th>{{ $k1->nama }}</th>
+                                                    @foreach ($kriteria as $k2)
+                                                        @php
+                                                            $perbandingan = $savedData[$k1->id][$k2->id] ?? null;
+                                                        @endphp
+                                                        <td contenteditable="true" data-id="{{ $perbandingan->id ?? '' }}">
+                                                            {{ $perbandingan->nilai_perbandingan ?? '' }}
+                                                        </td>
+                                                    @endforeach
+                                                    <th>x</th>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <thead>
+                                            <tr>
+                                                <th>Perkalian</th>
+                                                @foreach ($kriteria as $k)
+                                                    <th>{{ $k->nama }}</th>
+                                                @endforeach
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="card">
+                            <h3 class="card-header text-center font-weight-bold text-uppercase">
+                                Bobot
+                            </h3>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table id="datatable-normalisasi" class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Bobot</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($bobots as $bobot)
+                                                <tr>
+                                                    <td>{{ number_format($bobot->nilai, 5) }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                        <thead>
+                                            <tr>
+                                                <th>Bobot</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase">
+                        Matrik Hasil Perkalian
+                    </h3>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="datatable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Hasil *</th>
+                                        @foreach ($kriteria as $k)
+                                            <th>{{ $k->nama }}</th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($kriteria as $k1)
+                                        <tr>
+                                            <th>{{ $k1->nama }}</th>
+                                            @foreach ($kriteria as $k2)
+                                                @php
+                                                    $perbandingan = $savedData[$k1->id][$k2->id] ?? null;
+                                                    $bobot = $bobots->firstWhere('id', $k2->id)->nilai ?? 1; // Default to 1 if bobot is not found
+                                                    $result = $perbandingan
+                                                        ? $perbandingan->nilai_perbandingan * $bobot
+                                                        : '';
+                                                @endphp
+                                                <td data-id="{{ $perbandingan->id ?? '' }}">
+                                                    {{ $result }}
+                                                </td>
+                                            @endforeach
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>Hasil *</th>
+                                        @foreach ($kriteria as $k)
+                                            <th>{{ $k->nama }}</th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase">
+                        Uji Konsistensi
+                    </h3>
+                    <div class="card-body">
+                        <div class="">
+                            <table id="datatable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>N</th>
+                                        @foreach ($konsistensis as $konsistensi)
+                                            <td>{{ $konsistensi->n }}</td>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Rasio</th>
+                                        @foreach ($konsistensis as $konsistensi)
+                                            <td>{{ $konsistensi->rasio_konsistensi }}</td>
+                                        @endforeach
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase">
+                        Konsistensi Rasio
+                    </h3>
+                    <div class="card-body">
+                        <div class="">
+                            <table id="datatable-normalisasi" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Keterangan</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th>Jumlah Kriteria (n)</th>
+                                        <th>{{ $kriteria->count() }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Indeks Random Consistency (IR)</th>
+                                        @php
+                                            $filteredKonsistensis = $konsistensis->where('n', $kriteria->count());
+                                        @endphp
+
+                                        @foreach ($filteredKonsistensis as $konsistensi)
+                                            <th>{{ $konsistensi->rasio_konsistensi }}</th>
+                                            <!-- Add other columns as needed -->
+                                        @endforeach
+                                    </tr>
+                                    <tr>
+                                        <th>λ maks (Jumlah / n) (t)</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Nilai Consistency Index (CI) ((λ maks - n)/n)</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Nilai Consistency Ratio (CR) (CI / IR)</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Syarat Nilai CR</th>
+                                        <th>CR ≤ 0.1 maka A cukup konsisten;<br> CR > 0.1 maka A sangat tidak konsisten</th>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -152,6 +358,41 @@
                 row.querySelector('.rata-rata').innerText = (total / sums.length).toFixed(5);
             });
         }
+
+        document.getElementById('simpanBobot').addEventListener('click', function() {
+            let bobots = [];
+            document.querySelectorAll('#datatable-normalisasi tbody tr').forEach(function(row) {
+                let kriteria = row.querySelector('th').innerText;
+                let rataRata = parseFloat(row.querySelector('.rata-rata').innerText) || 0;
+                bobots.push({
+                    kriteria: kriteria,
+                    bobot: rataRata
+                });
+            });
+
+            fetch('{{ route('perbandingan-kriteria.save-bobot') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        bobots: bobots
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Bobot berhasil disimpan!');
+                    } else {
+                        alert('Gagal menyimpan bobot.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menyimpan bobot.');
+                });
+        });
 
         document.addEventListener('DOMContentLoaded', function() {
             calculateSums();
