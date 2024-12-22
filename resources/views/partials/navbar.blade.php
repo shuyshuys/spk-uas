@@ -20,11 +20,26 @@
                         <a class="nav-link" href="{{ url('/home') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/dashboard') }}">Administrator</a>
+                        <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                            href="{{ url('https://readersinsight.net/jiet/article/view/2490') }}">Refference</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Referensi
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item"
+                                    href="https://readersinsight.net/jiet/article/view/2490">Referensi Jurnal</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="https://clone-spk-ahp.yazid.consulting/">Referensi
+                                    AHP</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="https://clone-spk-wp.yazid.consulting/">Referensi WP</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>

@@ -6,7 +6,7 @@
                     <label for="input-user">Input</label>
                 </li>
                 <li class="">
-                    <a href="/perbandingan-kriteria" class=" ">
+                    <a href="{{ route('perbandingan-kriteria') }}" class=" ">
                         <i class="ri-scales-line"></i></i><span>AHP</span>
                     </a>
                 </li>
@@ -16,7 +16,7 @@
                     </a>
                 </li> --}}
                 <li class="">
-                    <a href="/saw" class=" ">
+                    <a href="{{ route('saw') }}" class=" ">
                         <i class="ri-scales-line"></i></i><span>SAW</span>
                     </a>
                 </li>
@@ -25,24 +25,24 @@
                     <label for="input-user">Data</label>
                 </li>
                 <li class="">
-                    <a href="/kriteria" class=" ">
+                    <a href="{{ route('kriteria') }}" class=" ">
                         <i class="ri-survey-line"></i><span>Kriteria</span>
                     </a>
                 </li>
                 <li class="">
-                    <a href="/alternatif" class=" ">
+                    <a href="{{ route('alternatif') }}" class=" ">
                         <i class="ri-lightbulb-line"></i><span>Alternatif</span>
                     </a>
                 </li>
                 <li class="">
-                    <a href="/konsistensi" class=" ">
+                    <a href="{{ route('konsistensi') }}" class=" ">
                         <i class="ri-file-lock-line"></i><span>Konsistensi</span>
                     </a>
                 </li>
-                <hr>
+                {{-- <hr>
                 <li class="">
                     <label for="input-user">Hasil</label>
-                </li>
+                </li> --}}
                 {{-- <li class="">
                     <a href="/Normalisasi" class=" ">
                         <i class="ri-layout-grid-line"></i><span>Normalisasi</span>
@@ -53,11 +53,11 @@
                         <i class="ri-calculator-line"></i><span>Matriks Rata Rata</span>
                     </a>
                 </li> -->
-                <li class="">
+                {{-- <li class="">
                     <a href="/hasil" class=" ">
                         <i class="ri-checkbox-line"></i></i><span>Hasil</span>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </nav>
     </div>

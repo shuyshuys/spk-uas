@@ -34,11 +34,11 @@ Route::get('/kriteria', [KriteriaController::class, 'index'])->name('kriteria');
 
 Route::get('/alternatif', [AlternatifController::class, 'index'])->name('alternatif');
 
-Route::get('/perbandingan-kriteria', [PerbandinganKriteriaController::class, 'index'])->name('perbandingan-kriteria');
+Route::get('/ahp', [PerbandinganKriteriaController::class, 'index'])->name('perbandingan-kriteria');
 
 Route::post('/perbandingan-kriteria/update', [PerbandinganKriteriaController::class, 'update'])->name('perbandingan-kriteria.update');
 
-Route::post('/perbandingan-kriteria/save-bobot', [PerbandinganKriteriaController::class, 'update'])->name('perbandingan-kriteria.save-bobot');
+Route::post('/perbandingan-kriteria/save-bobot', [PerbandinganKriteriaController::class, 'saveBobot'])->name('perbandingan-kriteria.save-bobot');
 
 Route::get('/saw', [SawController::class, 'index'])->name('saw');
 
