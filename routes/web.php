@@ -10,6 +10,7 @@ use App\Http\Controllers\MatriksRataRataController;
 use App\Http\Controllers\NormalisasiController;
 use App\Http\Controllers\PerbandinganKriteriaController;
 use App\Http\Controllers\SawController;
+use App\Http\Controllers\AlternatifKriteriaController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -40,7 +41,11 @@ Route::post('/perbandingan-kriteria/update', [PerbandinganKriteriaController::cl
 
 Route::post('/perbandingan-kriteria/save-bobot', [PerbandinganKriteriaController::class, 'saveBobot'])->name('perbandingan-kriteria.save-bobot');
 
+Route::post('/perbandingan-kriteria/hasil/store', [PerbandinganKriteriaController::class, 'storeHasil'])->name('hasil.store');
+
 Route::get('/saw', [SawController::class, 'index'])->name('saw');
+
+Route::post('/saw/alternatifkriteria/update', [SawController::class, 'updateAlternatifKriteria'])->name('alternatifkriteria.update');
 
 Route::get('/matriks-keputusan', [MatriksKeputusanController::class, 'index'])->name('matriks-keputusan');
 
