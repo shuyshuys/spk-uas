@@ -33,7 +33,7 @@ class SawController extends Controller
             }
         }
 
-        return view('pages.saw', compact('hasils', 'saws', 'sawsGrouped', 'bobots'));
+        return view('pages.saw', compact('hasils', 'saws', 'sawsGrouped', 'bobots', 'kriterias'));
     }
 
     public function updateAlternatifKriteria(Request $request)

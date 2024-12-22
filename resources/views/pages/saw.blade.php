@@ -128,8 +128,8 @@
                                 <tbody>
                                     <tr>
                                         <td class="align-middle">Bobot</td>
-                                        @foreach ($bobots as $bobot)
-                                            <td class="bobot-value">{{ number_format($bobot->nilai, 5) }}</td>
+                                        @foreach ($kriterias as $bobot)
+                                            <td class="bobot-value">{{ number_format($bobot->bobot, 5) }}</td>
                                         @endforeach
                                     </tr>
                                 </tbody>
