@@ -22,8 +22,16 @@
                     </h3>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <button id="newDataButton" class="btn btn-primary mb-1">Hapus</button>
-                            <button id="updateButton" class="btn btn-primary mb-1">Simpan</button>
+
+                            <div class="d-flex justify-content-between mb-1">
+                                <div>
+                                    <button id="newDataButton" class="btn btn-primary mb-1">Bersihkan</button>
+                                    <button id="updateButton" class="btn btn-primary mb-1">Simpan</button>
+                                </div>
+                                <div>
+                                    <a href="/dashboard/kriterias" class="btn btn-info">Ubah Kriteria</a>
+                                </div>
+                            </div>
                             <table id="datatable" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -71,6 +79,7 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <p>*Bagian tabel ini bisa di edit secara langsung</p>
                         </div>
                     </div>
                 </div>
@@ -88,7 +97,7 @@
                                         @foreach ($perbandingansGrouped->first() as $perbandingan)
                                             <th>{{ $perbandingan->kriteria1->nama }}</th>
                                         @endforeach
-                                        <th>Rata-rata</th>
+                                        <th>Bobot</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,6 +112,17 @@
                                             <th class="rata-rata">0</th>
                                         </tr>
                                     @endforeach
+                                    {{-- @foreach ($perbandingansGrouped as $kriteriaId => $perbandingans)
+                                        <tr>
+                                            <th>{{ $perbandingans->first()->kriteria2->nama }}</th>
+                                            @foreach ($perbandingans as $perbandingan)
+                                                <td data-id="{{ $perbandingan->id }}">
+                                                    <span class="normalisasi-value"></span>
+                                                </td>
+                                            @endforeach
+                                            <th class="rata-rata">0</th>
+                                        </tr>
+                                    @endforeach --}}
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -110,7 +130,7 @@
                                         @foreach ($perbandingansGrouped->first() as $perbandingan)
                                             <th>{{ $perbandingan->kriteria1->nama }}</th>
                                         @endforeach
-                                        <th>Rata-rata</th>
+                                        <th>Bobot</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -170,16 +190,16 @@
                             </h3>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="datatable-normalisasi" class="table table-striped table-bordered">
+                                    <table class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>Bobot</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($bobots as $bobot)
+                                            @foreach ($kriteria as $bobot)
                                                 <tr>
-                                                    <td>{{ number_format($bobot->nilai, 5) }}</td>
+                                                    <td>{{ number_format($bobot->bobot, 5) }}</td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
@@ -207,24 +227,36 @@
                                         @foreach ($kriteria as $k)
                                             <th>{{ $k->nama }}</th>
                                         @endforeach
+                                        <th>Sum</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $rowSums = [];
+                                    @endphp
                                     @foreach ($kriteria as $k1)
                                         <tr>
                                             <th>{{ $k1->nama }}</th>
+                                            @php
+                                                $rowSum = 0;
+                                                $bobotIndex = 0;
+                                            @endphp
                                             @foreach ($kriteria as $k2)
                                                 @php
                                                     $perbandingan = $savedData[$k1->id][$k2->id] ?? null;
-                                                    $bobot = $bobots->firstWhere('id', $k2->id)->nilai ?? 1; // Default to 1 if bobot is not found
-                                                    $result = $perbandingan
-                                                        ? $perbandingan->nilai_perbandingan * $bobot
-                                                        : '';
+                                                    $bobot = $kriteria[$bobotIndex]->bobot ?? 1; // Default to 1 if bobot is not found
+                                                    $result = $perbandingan->nilai_perbandingan * $bobot;
+                                                    $rowSum += $result;
+                                                    $bobotIndex++;
                                                 @endphp
                                                 <td data-id="{{ $perbandingan->id ?? '' }}">
-                                                    {{ $result }}
+                                                    {{ number_format($result, 4) }}
                                                 </td>
                                             @endforeach
+                                            @php
+                                                $rowSums[$k1->id] = $rowSum;
+                                            @endphp
+                                            <td>{{ number_format($rowSum, 4) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -234,6 +266,7 @@
                                         @foreach ($kriteria as $k)
                                             <th>{{ $k->nama }}</th>
                                         @endforeach
+                                        <th>Sum</th>
                                     </tr>
                                 </thead>
                             </table>
@@ -279,7 +312,7 @@
                     <div class="card-body">
                         <div class="">
                             <button id="simpanCI" class="btn btn-primary mb-1">Simpan</button>
-                            <table id="datatable-normalisasi" class="table table-striped table-bordered">
+                            <table class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Keterangan</th>
@@ -303,13 +336,35 @@
                                         @endforeach
                                     </tr>
                                     <tr>
+                                        @php
+                                            $n = count($kriteria);
+                                            $lambdaMax = 0;
+                                            foreach ($kriteria as $index => $k) {
+                                                $lambdaMax += $rowSums[$k->id] / $k->bobot;
+                                            }
+                                            $lambdaMax = $lambdaMax / $n;
+                                        @endphp
                                         <th>λ maks (T) (Jumlah / n)</th>
+                                        <th>{{ number_format($lambdaMax, 4) }}</th>
                                     </tr>
                                     <tr>
+                                        @php
+                                            $ci = ($lambdaMax - $n) / ($n - 1);
+                                        @endphp
                                         <th>Nilai Consistency Index (CI) ((λ maks - n)/n)</th>
+                                        <th>{{ number_format($ci, 4) }}</th>
                                     </tr>
                                     <tr>
+                                        @php
+                                            $ri = $filteredKonsistensis->first()->rasio_konsistensi;
+                                            $cr = $ci / $ri;
+                                            $crClass = $cr <= 0.1 ? 'text-success' : 'text-danger';
+                                            $iconClass = $cr <= 0.1 ? 'ri-check-line' : 'ri-close-line';
+                                            $hasil = $cr <= 0.1 ? 'Konsisten' : 'Tidak Konsisten';
+                                        @endphp
                                         <th>Nilai Consistency Ratio (CR) (CI / IR)</th>
+                                        <th class="{{ $crClass }}">{{ number_format($cr, 4) }}<i
+                                                class="{{ $iconClass }} {{ $crClass }}"></i></th>
                                     </tr>
                                     <tr>
                                         <th>Syarat Nilai CR</th>
@@ -353,10 +408,12 @@
                         `#datatable tbody tr:nth-child(${rowIndex + 1}) td:nth-child(${cellIndex + 2})`
                     ).innerText) || 0;
                     let normalisasiValue = originalValue / sums[cellIndex];
+                    console.log('sum index ' + sums[cellIndex]);
+                    console.log(normalisasiValue);
                     cell.querySelector('.normalisasi-value').innerText = normalisasiValue.toFixed(5);
                     total += normalisasiValue;
                 });
-                row.querySelector('.rata-rata').innerText = (total / sums.length).toFixed(5);
+                row.querySelector('.rata-rata').innerText = (total / sums.length).toFixed(4);
             });
         }
 
@@ -385,6 +442,7 @@
                 .then(data => {
                     if (data.success) {
                         alert('Bobot berhasil disimpan!');
+                        window.location.reload();
                     } else {
                         alert('Gagal menyimpan bobot.');
                     }
@@ -396,8 +454,6 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            calculateSums();
-
             document.querySelectorAll('td[contenteditable="true"]').forEach(function(cell) {
                 cell.addEventListener('input', calculateSums);
             });
@@ -444,6 +500,42 @@
                 .catch(error => {
                     console.error('Error:', error);
                     alert('An error occurred while updating data.');
+                });
+        });
+
+        document.getElementById('simpanCI').addEventListener('click', function() {
+            let userId = {{ auth()->check() ? auth()->user()->id : 4 }};
+            let t = {{ number_format($lambdaMax, 4, '.', '') }};
+            let ci = {{ number_format($ci, 4, '.', '') }};
+            let ri = {{ number_format($ri, 4, '.', '') }};
+            let hasil = '{{ $hasil }}';
+
+            fetch('{{ route('hasil.store') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        t: t,
+                        ci: ci,
+                        ri: ri,
+                        hasil: hasil
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Data berhasil disimpan!');
+                        window.location.reload();
+                    } else {
+                        alert('Gagal menyimpan data.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menyimpan data.');
                 });
         });
     </script>
