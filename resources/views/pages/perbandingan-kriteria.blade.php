@@ -278,6 +278,7 @@
                     </h3>
                     <div class="card-body">
                         <div class="">
+                            <button id="simpanCI" class="btn btn-primary mb-1">Simpan</button>
                             <table id="datatable-normalisasi" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -302,7 +303,7 @@
                                         @endforeach
                                     </tr>
                                     <tr>
-                                        <th>λ maks (Jumlah / n) (t)</th>
+                                        <th>λ maks (T) (Jumlah / n)</th>
                                     </tr>
                                     <tr>
                                         <th>Nilai Consistency Index (CI) ((λ maks - n)/n)</th>
