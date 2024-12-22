@@ -29,15 +29,17 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li>
-                                <a class="dropdown-item"
-                                    href="https://readersinsight.net/jiet/article/view/2490">Referensi Jurnal</a>
+                                <a class="dropdown-item" href="https://readersinsight.net/jiet/article/view/2490"
+                                    target="_blank">Referensi Jurnal</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="https://clone-spk-ahp.yazid.consulting/">Referensi
+                                <a class="dropdown-item" href="https://clone-spk-ahp.yazid.consulting/"
+                                    target="_blank">Referensi
                                     AHP</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="https://clone-spk-wp.yazid.consulting/">Referensi WP</a>
+                                <a class="dropdown-item" href="https://clone-spk-wp.yazid.consulting/"
+                                    target="_blank">Referensi WP</a>
                             </li>
                         </ul>
                     </li>
