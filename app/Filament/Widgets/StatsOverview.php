@@ -15,9 +15,9 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Konsisensi Rasio', KonsistensiRasio::count()),
             Stat::make('Total Kriteria', Kriteria::count()),
             Stat::make('Total Alternatif', Alternatif::count()),
+            Stat::make('Total Konsisensi Rasio', KonsistensiRasio::count()),
         ];
     }
 }
